@@ -1,37 +1,38 @@
 import 'querystring'
-import jwtDecode from 'jwt-decode'
+// import jwtDecode from 'jwt-decode'
 import http from '../httpService'
-import { apiUrl, auth_username, auth_password } from '../../config.json'
-
+import {api} from '../../config.js'
+import axios from 'axios'
 const querystring = require('querystring')
 
-const apiEndpoint = apiUrl + '/oauth/token'
+const apiEndpoint = api.apiUrl + '/login'
 
 export async function login(email, password) {
-  
+  console.log(apiEndpoint, api.apiUrl)
+  let response = await axios.post(apiEndpoint,{username: email,password: password})
 
-  const response = await http.post(
-    apiEndpoint,
-    querystring.stringify({
-      username: email,
-      password: password,
-      grant_type: 'password',
-    }),
-    {
-      auth: {
-        username: auth_username,
-        password: auth_password,
-      },
-    },
-  )
-  const data = response.data
+  // const response = await http.post(
+  //   apiEndpoint,
+  //   querystring.stringify({
+  //     username: email,
+  //     password: password,
+  //     grant_type: 'password',
+  //   }),
+  //   {
+  //     auth: {
+  //       username: auth_username,
+  //       password: auth_password,
+  //     },
+  //   },
+  // )
+  // const data = response.data
   return response
 }
 
-function loginWithJwt(access_token, refresh_token) {
+function loginWithJwt(token) {
 
-  localStorage.setItem('access_token', access_token)
-  localStorage.setItem('refresh_token', refresh_token)
+  localStorage.setItem('token', token)
+  // localStorage.setItem('refresh_token', refresh_token)
 
 }
 
@@ -39,11 +40,15 @@ function setForcePassword(force_change) {
   localStorage.setItem('force_change',force_change)
 }
 
+export function setCurrentUser(user) {
+  localStorage.setItem('user',user)
+}
+
 
 export function getCurrentUser() {
   try {
-    const jwt = localStorage.getItem('access_token')
-    const user = jwtDecode(jwt)
+    const jwt = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
 
 
     return user
@@ -53,13 +58,13 @@ export function getCurrentUser() {
 }
 
 export function logout() {
-  localStorage.removeItem('access_token')
-  localStorage.removeItem('refresh_token')
-  localStorage.removeItem('force_change')
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+  // localStorage.removeItem('force_change')
 }
 
 export function getJwt() {
-  return localStorage.getItem('access_token')
+  return localStorage.getItem('token')
 }
 
 export function getForcePassword() {
@@ -68,7 +73,7 @@ export function getForcePassword() {
 
 export function getUserRole() {
   const user = getCurrentUser()
-  return user.authorities[0]
+  return user.role
 }
 
 
@@ -76,6 +81,7 @@ export function getUserRole() {
 export default {
   login,
   loginWithJwt,
+  setCurrentUser,
   getCurrentUser,
   logout,
   getJwt,
