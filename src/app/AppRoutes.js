@@ -29,6 +29,9 @@ const Driver = lazy(() => import('./pages/Driver'));
 const Delivery = lazy(() => import('./pages/Delivery'));
 const Assistant = lazy(() => import('./pages/Assistant'));
 
+// admin route
+const Manager = lazy(() => import('./pages/Manager'));
+
 
 
 
@@ -61,6 +64,9 @@ class AppRoutes extends Component {
           <Route path="/driver" component={ Driver } />
           <Route path="/delivery" component={ Delivery } />
           <Route path="/assistants" component={ Assistant } />
+
+
+          <Route path="/manager" component={ Manager } />
 
           <Redirect to="/login" />
         </Switch>

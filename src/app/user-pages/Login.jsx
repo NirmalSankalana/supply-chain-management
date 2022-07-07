@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useLocation } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input, Alert, Card,  CardBody } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
 // import "../styles/login.css";
 import Auth from '../../services/user/authService';
-import UserService from '../../services/user/userService';
+
 
 export default function Login1() {
   const [username, setUsername] = useState("");
@@ -49,48 +49,15 @@ export default function Login1() {
   };
 
   const handleLogin = async () => {
-    // auth
-    //   .login({ user, password })
-    //   .then((email) => {
-    //     navigate("/main");
-    //   })
-    //   .catch((err) => {
-    //     switch (err.request.status) {
-    //       case 400:
-    //          setAlertMessage(err.response.data.message);
-    //         setShow(true);
-    //         break;
-    //       case 401:
-    //         setAlertMessage(err.response.data.message);
-    //         setShow(true);
-    //         break;
-    //       case 500:
-    //         setAlertMessage("Server Error!");
-    //         setShow(true);
-    //         break;
-    //       case 501:
-    //         setAlertMessage("Server Error!");
-    //         setShow(true);
-    //         break;
-    //       case 502:
-    //         setAlertMessage("Server Error!");
-    //         setShow(true);
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //
-    //   });
-
     try {
       const response = await Auth.login(username, password)
 
-      if (response.status == 200 || response.status == 201) {
+      if (response.status === 200 || response.status === 201) {
         console.log("success");
         console.log(response.data.token);
         Auth.loginWithJwt(response.data.token);
         history.push("/dashboard")
-    }
+      }
 
     } catch (ex) {
       console.log(ex.response.status + "KKKKKKKKKKKKKKKKK");
@@ -121,16 +88,7 @@ export default function Login1() {
       <div className="">
         <div className="">
           <div className="position-absolute top-50 start-50 translate-middle">
-            <Card
-              className="shadow"
-              style={{
-                margin: "5rem",
-                border: "0px",
-                borderRadius: '10px',
-                color: "rgb(38, 59, 70)",
-                backgroundColor: "rgba(255, 255, 255, 0.3)",
-              }}
-            >
+            <Card>
               <CardBody>
                 <h1 className="">Supplier Management System</h1>
                 <br></br>
@@ -183,7 +141,7 @@ export default function Login1() {
                         type="submit"
                         value="submit"
                         color="primary"
-                        className="shadow-sm"
+                        className="btn btn-primary"
                       >
                         Login
                       </Button>
