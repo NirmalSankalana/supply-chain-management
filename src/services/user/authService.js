@@ -1,13 +1,20 @@
 import 'querystring'
 // import jwtDecode from 'jwt-decode'
+import {useHistory } from "react-router-dom";
 import http from '../httpService'
 import {api} from '../../config.js'
 import axios from 'axios'
 const querystring = require('querystring')
 
+
+
 const apiEndpoint = api.apiUrl + '/login'
 
+
+
 export async function login(email, password) {
+
+  
   console.log(apiEndpoint, api.apiUrl)
   let response = await axios.post(apiEndpoint,{username: email,password: password})
 
@@ -46,12 +53,12 @@ export function setCurrentUser(user) {
 
 
 export function getCurrentUser() {
+  
   try {
-    const jwt = localStorage.getItem('token')
     const user = localStorage.getItem('user')
-
-
-    return user
+    if(user)
+      return user
+    
   } catch (ex) {
     return null
   }

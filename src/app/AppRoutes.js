@@ -30,8 +30,6 @@ const Delivery = lazy(() => import('./pages/Delivery'));
 const Assistant = lazy(() => import('./pages/Assistant'));
 
 
-
-
 class AppRoutes extends Component {
   render () {
     return (

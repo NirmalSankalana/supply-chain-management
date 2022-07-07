@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Label, Input, Alert, Card,  CardBody } from "r
 import Auth from '../../services/user/authService';
 import UserService from '../../services/user/userService';
 
-export default function Login1() {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const initialValues = { username: "", password: "" };
@@ -89,6 +89,7 @@ export default function Login1() {
         console.log("success");
         console.log(response.data.token);
         Auth.loginWithJwt(response.data.token);
+        Auth.setCurrentUser(response.data.user);
         history.push("/dashboard")
     }
 
@@ -115,8 +116,14 @@ export default function Login1() {
       }
     }
   };
-
-  return (
+  if (Auth.getCurrentUser()){
+    console.log(Auth.getCurrentUser())
+    // history.push("/dashboard")
+    return <Redirect to="/dashboard" />
+  }
+    
+  else
+    return (
     <div className="login">
       <div className="">
         <div className="">
