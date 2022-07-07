@@ -12,6 +12,12 @@ function AllManagers() {
   const apiEndpoint = api.apiUrl + "/admin/getManagers";
   const [managers, setManagers] = useState([]);
 
+  const updateData = (manager)=>{
+    
+    console.log(manager)
+    return (<Redirect to={{ pathname: "/test/new",state: { manager: manager }}}/>
+)
+  }
   useEffect(() => {
     http.get(apiEndpoint).then(response =>{
         let manager_data = response.data.result.result
@@ -34,10 +40,11 @@ function AllManagers() {
             <thead>
               <tr>
                 <th>Staff ID</th> 
-                <th>User ID</th>
                 <th>First Name </th>
                 <th>Last Name </th>
                 <th>Role</th>
+                <th>Update</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -47,6 +54,8 @@ function AllManagers() {
                   <td>{manager['First_Name']}</td>
                   <td>{manager['Last_Name']}</td> 
                   <td>{manager['Role']}</td>
+                  <th><button onClick={()=>updateData(manager)}>Update</button></th>
+                  <th><button>Delete</button></th>
                 </tr>)
               )}
             </tbody>
