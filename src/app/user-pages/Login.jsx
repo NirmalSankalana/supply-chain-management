@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect,useHistory } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
 // import "../styles/login.css";
 import Auth from '../../services/user/authService';
