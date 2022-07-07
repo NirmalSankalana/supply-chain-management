@@ -1,73 +1,79 @@
-import React, { Component } from "react";
+import axios from 'axios';
+import React, { Component, useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import managerServices from '../../services/admin/managerServices';
 import ViewAllTable from "./common/ViewAllTable";
+import { api } from '../../config'
+
+
+function AllManagers() {
+    const apiEndpoint = api.apiUrl + '/admin/getManagers';
+    const [managers, setManagers] = useState([])
+    useEffect(() => {
+        axios.get(apiEndpoint).then(res => {
+            console.log(res)
+            let manager_data = res.data.result.result;
+
+            // console.log(manager_data);
+            setManagers(manager_data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }, []);
+
+    console.log(managers)
 
 
 
-
-export class Manager extends Component {
-    // state = {
-    //     isRedirect: false,
-    //     columnNames: ["id", "Start city", "End city"],
-    //     tableData: [],
-    // };
-
-    // componentDidMount = async () => {
-    //     const tableData = [];
-    //     try {
-    //         const response = await managerServices.getDeliveryRoutes();
-
-    //         if (response.status === 200) {
-    //             if (response.data.code === 200) {
-    //                 const response_data = response.data.data;
-    //                 if (response_data.length > 0) {
-    //                     for (let i = 0; i < response_data.length; i++) {
-    //                         let row = {
-    //                             id: response_data[i].id,
-    //                             "Start city": response_data[i].start_city,
-    //                             "End city": response_data[i].end_city,
-    //                         };
-    //                         tableData.push(row);
-    //                     }
-    //                     this.setState({ tableData, isRedirect: false });
-    //                 }
-    //             } else {
-    //                 this.setState({ isRedirect: true });
-    //                 Toast.error("Error occured!");
-    //             }
-    //         } else {
-    //             this.setState({ isRedirect: true });
-    //             Toast.error("Error occured!");
-    //         }
-    //     } catch (error) {
-    //         this.setState({ isRedirect: true });
-    //         Toast.error("Error occured!");
-    //     }
-    // };
-
-    render() {
-        // if (this.state.isRedirect)
-        //     return <Redirect to="/manager/all-managers" />;
-        return (
-            <div>
-                <div className="card">
-                    <div className="card-body">
-                        <h4 className="card-title">Managers</h4>
-                        <div className="table-responsive">
-                            hehe
-                            {/* <ViewAllTable
-                                columnNames={this.state.columnNames}
-                                tableData={this.state.tableData}
-                                editURL="edit-route/"
-                                onDelete={this.handleDelete}
-                            /> */}
-                        </div>
-                    </div>
-                </div>
+    return (
+        <div className="card">
+            <div className="card-body">
+                <h4 className="card-title">Managers</h4>
+       
+            <div className="table-responsive">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Staff ID</th>
+                            <th>User ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            {
+                            managers.map(manager => {
+                                <tr key={manager.User_ID}>
+                                    <td>{manager.Staff_ID}</td>
+                                    <td>{manager.First_Name}</td>
+                                    <td>{manager.Last_Name}</td>
+                                    <td>{manager.Role}</td>
+                                </tr>
+                            })
+                            }
+                        
+                        <tr>
+                            <td>Jacob</td>
+                            <td>53275531</td>
+                            <td>12 May 2017</td>
+                            <td><label className="badge badge-danger">Pending</label></td>
+                            <td><label className="badge badge-danger">Pending</label></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        );
-    }
+        </div>
+        <ul>
+                           
+        </ul>
+      </div >
+
+
+    )
 }
-export default Manager;
+
+
+export default AllManagers;
