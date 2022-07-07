@@ -4,7 +4,7 @@ import {useHistory } from "react-router-dom";
 import http from '../httpService'
 import {api} from '../../config.js'
 import axios from 'axios'
-const querystring = require('querystring')
+
 
 
 
@@ -17,34 +17,11 @@ export async function login(email, password) {
   
   console.log(apiEndpoint, api.apiUrl)
   let response = await axios.post(apiEndpoint,{username: email,password: password})
-
-  // const response = await http.post(
-  //   apiEndpoint,
-  //   querystring.stringify({
-  //     username: email,
-  //     password: password,
-  //     grant_type: 'password',
-  //   }),
-  //   {
-  //     auth: {
-  //       username: auth_username,
-  //       password: auth_password,
-  //     },
-  //   },
-  // )
-  // const data = response.data
   return response
 }
 
 function loginWithJwt(token) {
-
   localStorage.setItem('token', token)
-  // localStorage.setItem('refresh_token', refresh_token)
-
-}
-
-function setForcePassword(force_change) {
-  localStorage.setItem('force_change',force_change)
 }
 
 export function setCurrentUser(user) {
@@ -93,6 +70,5 @@ export default {
   logout,
   getJwt,
   getUserRole,
-  setForcePassword,
   getForcePassword,
 }
