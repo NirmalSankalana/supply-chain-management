@@ -1,17 +1,22 @@
 import axios from "axios";
 import React, { Component, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory,Redirect } from "react-router-dom";
 import { api } from "../../config.js";
 import httpService from "../../services/httpService.js";
 import http from "../../services/httpService";
 import Auth from "../../services/user/authService";
+import { Button, FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
+
 
 function AddManager() {
-  const apiEndpoint = api.apiUrl + "admin/register";
-
-  const initialValues = { name: "", email: "", contact: "", join_date: null };
+  const apiEndpoint = api.apiUrl + "/admin/register";
+  const history = useHistory()
+  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };
+  
   const [formValues, setformValues] = useState(initialValues);
+  const [show, setShow] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,28 +25,63 @@ function AddManager() {
 
   const submitHandler = async (e) => {
     
-    let data = {
-      userName: userName,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-      managerRole: managerRole,
-    };
     e.preventDefault();
-    console.log(this.state);
+    console.log(formValues);
 
-    //console.log(apiEndPoint)
+    console.log(apiEndpoint)
+    try{
+      const response = await http.post(apiEndpoint, formValues);
+      console.log(response);
+    }catch(ex){
+      if (ex.response) {
+        console.log(ex.response);
+        switch (ex.response.status) {
+          case 400:
+            setShow(true)
+            setAlertMessage(ex.response.data.message);
+            break;
+          case 401:
+            setShow(true)
+            setAlertMessage(ex.response.data.message);
+            history.push({
+              pathname:"/logout"
+            })
 
-    const response = await http.post(apiEndpoint, data);
-    console.log(response);
+            break;
+          case 404:
+            setShow(true)
+            setAlertMessage(ex.response.data.message);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    
   };
 
+  const user = Auth.getCurrentUser()
+  
+  if(user == null){
+    return <Redirect to={'/login'} />
+  }
+
+  if(user.role !== 'ADMIN'){
+    return <Redirect to={'/logout'} />
+  }
+
+  // if (user){
+  //   return <Redirect to="/dashboard" />
+  // }
   return (
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
           <h4 className="card-title">Register New Manager</h4>
-          <form className="" onSubmit={this.submitHandler}>
+          <Alert isOpen={show} color='danger'>
+                  <p>{alertMessage}</p>
+        </Alert>
+          <form className="" onSubmit={submitHandler}>
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
@@ -50,8 +90,8 @@ function AddManager() {
                     <Form.Control
                       type="text"
                       name="username"
-                      value={this.state.username}
-                      onChange={this.handleChange}
+                      value={formValues.username}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -64,8 +104,8 @@ function AddManager() {
                     <Form.Control
                       type="password"
                       name="password"
-                      value={this.state.password}
-                      onChange={this.handleChange}
+                      value={formValues.password}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -79,9 +119,9 @@ function AddManager() {
                   <div className="col-sm-9">
                     <Form.Control
                       type="text"
-                      name="firstName"
-                      value={this.state.firstName}
-                      onChange={this.handleChange}
+                      name="fName"
+                      value={formValues.firstName}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -93,9 +133,9 @@ function AddManager() {
                   <div className="col-sm-9">
                     <Form.Control
                       type="text"
-                      name="lastName"
-                      value={this.state.lastName}
-                      onChange={this.handleChange}
+                      name="lName"
+                      value={formValues.lastName}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -110,8 +150,8 @@ function AddManager() {
                     <Form.Control
                       type="text"
                       name="managerRole"
-                      value={this.state.managerRole}
-                      onChange={this.handleChange}
+                      value={formValues.managerRole}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -122,7 +162,7 @@ function AddManager() {
             <button type="submit" className="btn btn-primary mr-2">
               Submit
             </button>
-            <button className="btn btn-light">Cancel</button>
+            {/* <button className="btn btn-light">Cancel</button> */}
           </form>
         </div>
       </div>

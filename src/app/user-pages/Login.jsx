@@ -57,6 +57,7 @@ export default function Login() {
         console.log(response.data.token);
         Auth.loginWithJwt(response.data.token);
         Auth.setCurrentUser(response.data.user);
+        console.log("222222222")
         history.push("/dashboard")
       }
 
@@ -84,6 +85,7 @@ export default function Login() {
     }
   };
   if (Auth.getCurrentUser()){
+    console.log("KKKKKKKK")
     console.log(Auth.getCurrentUser())
     // history.push("/dashboard")
     return <Redirect to="/dashboard" />

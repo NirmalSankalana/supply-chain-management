@@ -8,15 +8,12 @@ import axios from 'axios'
 
 
 
-const apiEndpoint = api.apiUrl + '/login'
+const apiLoginEndpoint = api.apiUrl + '/login'
+const apiLogoutEndpoint = api.apiUrl + '/logout'
 
-
-
-export async function login(email, password) {
-
-  
-  console.log(apiEndpoint, api.apiUrl)
-  let response = await axios.post(apiEndpoint,{username: email,password: password})
+export async function login(email, password) {  
+  //console.log(apiEndpoint, api.apiUrl)
+  let response = await axios.post(apiLoginEndpoint,{username: email,password: password})
   return response
 }
 
@@ -25,7 +22,7 @@ function loginWithJwt(token) {
 }
 
 export function setCurrentUser(user) {
-  localStorage.setItem('user',user)
+  localStorage.setItem('user',JSON.stringify(user))
 }
 
 
@@ -34,17 +31,21 @@ export function getCurrentUser() {
   try {
     const user = localStorage.getItem('user')
     if(user)
-      return user
+      return JSON.parse(user)
     
   } catch (ex) {
     return null
   }
 }
 
-export function logout() {
-  localStorage.removeItem('token')
-  localStorage.removeItem('user')
-  // localStorage.removeItem('force_change')
+export async function logout() {
+  // let response = await axios.post(apiLogoutEndpoint)
+  try{
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  }catch(e){
+    console.log(e)
+  }
 }
 
 export function getJwt() {
