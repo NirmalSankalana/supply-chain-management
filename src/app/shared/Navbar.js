@@ -1,15 +1,38 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
+
 import { Dropdown } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
+import Auth from "../../services/user/authService"
+
+
 
 class Navbar extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      redirect:null
+    }
+    this.handleLogout = this.handleLogout.bind(this) 
+  }
+   
   toggleOffcanvas() {
     document.querySelector('.sidebar-offcanvas').classList.toggle('active');
   }
   toggleRightSidebar() {
     document.querySelector('.right-sidebar').classList.toggle('open');
   }
+
+  handleLogout(){
+    this.setState({
+      redirect:'/logout'
+    })
+  }
   render () {  
+    if(this.state.redirect){
+      console.log(this.state.redirect)
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <nav className="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
         <div className="navbar-menu-wrapper d-flex align-items-center justify-content-between">
@@ -138,7 +161,7 @@ class Navbar extends Component {
                   <Dropdown.Item className="dropdown-item preview-item d-flex align-items-center border-0" onClick={evt =>evt.preventDefault()}>
                     <Trans>Check Inbox</Trans>
                   </Dropdown.Item>
-                  <Dropdown.Item className="dropdown-item preview-item d-flex align-items-center border-0" onClick={evt =>evt.preventDefault()}>
+                  <Dropdown.Item className="dropdown-item preview-item d-flex align-items-center border-0" onClick={this.handleLogout}>
                     <Trans>Sign Out</Trans>
                   </Dropdown.Item>
                 </Dropdown.Menu>
