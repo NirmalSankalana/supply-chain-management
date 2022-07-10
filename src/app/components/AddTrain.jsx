@@ -75,7 +75,7 @@ function AddStoreKeeper() {
         <div className="col-12 grid-margin">
             <div className="card">
                 <div className="card-body">
-                    <h4 className="card-title">Register New Manager</h4>
+                    <h4 className="card-title">Add New Train</h4>
                     <Alert isOpen={show} color='danger'>
                         <p>{alertMessage}</p>
                     </Alert>
@@ -83,7 +83,7 @@ function AddStoreKeeper() {
                         <div className="row">
                             <div className="col-md-6">
                                 <Form.Group className="row">
-                                    <label className="col-sm-3 col-form-label">Email</label>
+                                    <label className="col-sm-3 col-form-label">Start City</label>
                                     <div className="col-sm-9">
                                         <Form.Control
                                             type="text"
@@ -97,7 +97,7 @@ function AddStoreKeeper() {
                             </div>
                             <div className="col-md-6">
                                 <Form.Group className="row">
-                                    <label className="col-sm-3 col-form-label">Password</label>
+                                    <label className="col-sm-3 col-form-label">End City</label>
                                     <div className="col-sm-9">
                                         <Form.Control
                                             type="password"
@@ -113,26 +113,12 @@ function AddStoreKeeper() {
                         <div className="row">
                             <div className="col-md-6">
                                 <Form.Group className="row">
-                                    <label className="col-sm-3 col-form-label">First Name</label>
+                                    <label className="col-sm-3 col-form-label">Capacity</label>
                                     <div className="col-sm-9">
                                         <Form.Control
                                             type="text"
                                             name="fName"
                                             value={formValues.firstName}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
-                                </Form.Group>
-                            </div>
-                            <div className="col-md-6">
-                                <Form.Group className="row">
-                                    <label className="col-sm-3 col-form-label">Last Name</label>
-                                    <div className="col-sm-9">
-                                        <Form.Control
-                                            type="text"
-                                            name="lName"
-                                            value={formValues.lastName}
                                             onChange={handleChange}
                                             required
                                         />

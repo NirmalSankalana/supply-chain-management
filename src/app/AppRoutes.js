@@ -37,7 +37,10 @@ const UpdateManager = lazy(() => import("../app/components/UpdateManager"));
 const AddManager = lazy(() => import("../app/components/AddManager"));
 const AllManagers = lazy(() => import("../app/components/AllManagers"));
 
-const StoreKeeper = lazy(() => import("../app/components/AllManagers"));
+
+
+const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
+const Train = lazy(() => import("./pages/Train"));
 
 class AppRoutes extends Component {
   render() {
@@ -79,6 +82,7 @@ class AppRoutes extends Component {
 
           <Route path="/manager" component={Manager} />
           <Route path="/store-keeper" component={StoreKeeper} />
+          <Route path="/train" component={Train} />
 
           <Redirect to="/login" />
         </Switch>

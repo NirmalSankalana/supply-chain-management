@@ -139,6 +139,22 @@ function AddManager() {
                   </div>
                 </Form.Group>
               </div>
+              <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-3 col-form-label">
+                    Manager Role
+                  </label>
+                  <div className="col-sm-9">
+                    <Form.Control
+                      type="text"
+                      name="managerRole"
+                      value={formValues.managerRole}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </div>
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
