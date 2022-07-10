@@ -1,12 +1,10 @@
-import axios from "axios";
-import React, { Component, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { useHistory,Redirect } from "react-router-dom";
 import { api } from "../../config.js";
-import httpService from "../../services/httpService.js";
 import http from "../../services/httpService";
 import Auth from "../../services/user/authService";
-import { Button, FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
+import {Alert} from "reactstrap";
 
 
 function AddManager() {
@@ -135,22 +133,6 @@ function AddManager() {
                       type="text"
                       name="lName"
                       value={formValues.lastName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">
-                    Manager Role
-                  </label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="managerRole"
-                      value={formValues.managerRole}
                       onChange={handleChange}
                       required
                     />

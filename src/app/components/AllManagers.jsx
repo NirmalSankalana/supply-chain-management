@@ -125,8 +125,8 @@ function AllManagers() {
                   <td>{manager['First_Name']}</td>
                   <td>{manager['Last_Name']}</td> 
                   <td>{manager['Role']}</td>
-                  <th><button onClick={()=>updateData(manager)}>Update</button></th>
-                  <th><button onClick={()=>deleteData(manager)}>Delete</button></th>
+                  <th><button type="button" className="btn btn-warning btn-rounded" onClick={()=>updateData(manager)}>Update</button></th>
+                  <th><button type="button" className="btn btn-danger btn-rounded" onClick={()=>deleteData(manager)}>Delete</button></th>
                 </tr>)
               )}
             </tbody>
