@@ -64,7 +64,7 @@ export default function Login() {
     } catch (ex) {
       console.log(ex.response.status + "KKKKKKKKKKKKKKKKK");
       if (ex.response) {
-        console.log(ex.response);
+        console.log(ex.response.status);
         switch (ex.response.status) {
           case 400:
             setAlertMessage(ex.response.data.message);
@@ -118,7 +118,7 @@ export default function Login() {
                         onChange={handleChange}
                       />
                       <p
-                        class="fst-italic fw-bolder"
+                        className="fst-italic fw-bolder"
                         style={{ color: "#f93154" }}
                       >
                         {formErrors.username}
@@ -136,7 +136,7 @@ export default function Login() {
                         onChange={handleChange}
                       />
                       <p
-                        class="fst-italic fw-bolder"
+                        className="fst-italic fw-bolder"
                         style={{ color: "#f93154" }}
                       >
                         {formErrors.password}

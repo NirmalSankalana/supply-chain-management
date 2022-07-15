@@ -4,7 +4,6 @@ import AddRoute from '../components/AddRoute';
 import AllRoutes from '../components/AllRoutes';
 function DeliveryRoutes() {
   return (
-
       <div className="row">
         <div className="col-12">
           <div className="page-header">
@@ -26,6 +25,7 @@ function DeliveryRoutes() {
           </div>
           <Route exact path="/delivery-routes/all-routes" component={AllRoutes} />
           <Route exact path="/delivery-routes/add-route" component={AddRoute} />
+          <Route exact path="/delivery-routes/update-route" component={AddRoute} />
           <Route exact path="/delivery-routes" component={AllRoutes} />
         </div>
       </div>

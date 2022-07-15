@@ -854,7 +854,9 @@ export class Dashboard extends Component {
   toggleProBanner() {
     document.querySelector('.proBanner').classList.toggle("hide");
   }
+ 
   render () {
+    // console.log(localStorage.getItem('token'))
     return (
       <div>
         <div className="row page-title-header">

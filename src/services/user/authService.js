@@ -12,13 +12,14 @@ const apiLoginEndpoint = api.apiUrl + '/login'
 const apiLogoutEndpoint = api.apiUrl + '/logout'
 
 export async function login(email, password) {  
-  //console.log(apiEndpoint, api.apiUrl)
+  console.log(apiLoginEndpoint)
   let response = await axios.post(apiLoginEndpoint,{username: email,password: password})
   return response
 }
 
 function loginWithJwt(token) {
   localStorage.setItem('token', token)
+  console.log(localStorage.getItem('token'))
 }
 
 export function setCurrentUser(user) {

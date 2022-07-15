@@ -43,7 +43,7 @@ function AddAssistant() {
   //           history.push({
   //             pathname:"/logout"
   //           })
-
+    
   //           break;
   //         case 404:
   //           setShow(true)
@@ -54,11 +54,11 @@ function AddAssistant() {
   //       }
   //     }
   //   }
-    
-  // };
 
-  // const user = Auth.getCurrentUser()
+  // };
   
+  // const user = Auth.getCurrentUser()
+
   // if(user == null){
   //   return <Redirect to={'/login'} />
   // }
@@ -66,10 +66,6 @@ function AddAssistant() {
   // if(user.role !== 'ADMIN'){
   //   return <Redirect to={'/logout'} />
   // }
-
-  // // if (user){
-  // //   return <Redirect to="/dashboard" />
-  // // }
   return (
     <div className="col-12 grid-margin">
       <div className="card">

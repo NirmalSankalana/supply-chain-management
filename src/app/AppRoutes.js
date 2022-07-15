@@ -2,6 +2,7 @@ import React, { Component, Suspense, lazy } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import Spinner from "../app/shared/Spinner";
+// import UpdateRoute from "./components/UpdateRoute";
 
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
@@ -37,10 +38,21 @@ const UpdateManager = lazy(() => import("../app/components/UpdateManager"));
 const AddManager = lazy(() => import("../app/components/AddManager"));
 const AllManagers = lazy(() => import("../app/components/AllManagers"));
 
+const UpdateRoute = lazy(() => import("./components/UpdateRoute"));
+const AddRoute = lazy(() => import("../app/components/AddRoute"));
+const AllRoutes = lazy(() => import("../app/components/AllRoutes"));
 
-
-const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
+// const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
 const Train = lazy(() => import("./pages/Train"));
+
+// manager routes
+const UpdateStorekeeper = lazy(() => import("./components/UpdateStorekeeper"));
+const AddStorekeeper = lazy(() => import("../app/components/AddStorekeeper"));
+const AllStorekeepers = lazy(() => import("../app/components/AllStorekeepers"));
+
+const UpdateTrain = lazy(() => import("../app/components/UpdateTrain"));
+const AddTrain = lazy(() => import("../app/components/AddTrain"));
+const AllTrains = lazy(() => import("../app/components/AllTrains"));
 
 class AppRoutes extends Component {
   render() {
@@ -50,12 +62,22 @@ class AppRoutes extends Component {
           <Route path="/login" component={Login} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/logout" component={Logout} />
-          
          
           <Route path="/admin/register" component={AddManager} />
           <Route path="/admin/update" component={UpdateManager} />
           <Route path="/admin/getManagers" component={AllManagers} />
 
+          <Route path="/storekeeper/update-route" component={UpdateRoute} />
+          <Route path="/storekeeper/routes" component={AllRoutes} />
+          <Route path="/storekeeper/registerRoute" component={AddRoute} />
+
+          <Route path="/manager/register" component={AddStorekeeper} />
+          <Route path="/manager/update" component={UpdateStorekeeper} />
+          <Route path="/manager/getStorekeepers" component={AllStorekeepers} />
+
+          <Route path="/manager/registerTrain" component={AddTrain} />
+          <Route path="/manager/updateTrain" component={UpdateTrain} />
+          <Route path="/manager/getTrains" component={AllTrains} />
           {/* <Route path="/basic-ui/buttons" component={Buttons} />
           <Route path="/basic-ui/dropdowns" component={Dropdowns} /> */}
 
@@ -81,7 +103,7 @@ class AppRoutes extends Component {
           <Route path="/assistant" component={Assistant} />
 
           <Route path="/manager" component={Manager} />
-          <Route path="/store-keeper" component={StoreKeeper} />
+          {/* <Route path="/store-keeper" component={StoreKeeper} /> */}
           <Route path="/train" component={Train} />
 
           <Redirect to="/login" />

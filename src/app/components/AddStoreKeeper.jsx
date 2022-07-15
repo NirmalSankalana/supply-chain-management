@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import { useHistory,Redirect } from "react-router-dom";
 import { api } from "../../config.js";
 import http from "../../services/httpService";
+import axios from "axios";
 import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
@@ -12,7 +13,8 @@ function AddStoreKeeper() {
   const initialValues = { username: "", password: "", fName: "", lName: ""};
   
   const [formValues, setformValues] = useState(initialValues);
-  const [show, setShow] = useState(false);
+  const [showErr, setShowErr] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [alertMessage, setAlertMessage] = useState('')
 
   const handleChange = (e) => {
@@ -27,18 +29,28 @@ function AddStoreKeeper() {
 
     console.log(apiEndpoint)
     try{
-      const response = await http.post(apiEndpoint, formValues);
+      // const response = await http.post(apiEndpoint, formValues);
+      let token = localStorage.getItem("token");
+      const response = await axios.post(apiEndpoint, {headers: { Authorization: `Bearer ${token}` }})
       console.log(response);
+      if(response.statusCode === 200){
+        setformValues(initialValues)
+        setShowErr(false);
+        setShowPass(true)
+        setAlertMessage("Successfully Inserted!");
+      }
     }catch(ex){
       if (ex.response) {
         console.log(ex.response);
         switch (ex.response.status) {
           case 400:
-            setShow(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             break;
           case 401:
-            setShow(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             history.push({
               pathname:"/logout"
@@ -46,7 +58,8 @@ function AddStoreKeeper() {
 
             break;
           case 404:
-            setShow(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             break;
           default:
@@ -75,7 +88,10 @@ function AddStoreKeeper() {
       <div className="card">
         <div className="card-body">
           <h4 className="card-title">Register New Storekeeper</h4>
-          <Alert isOpen={show} color='danger'>
+          <Alert isOpen={showErr} color='danger'>
+                  <p>{alertMessage}</p>
+        </Alert>
+        <Alert isOpen={showPass} color='success'>
                   <p>{alertMessage}</p>
         </Alert>
           <form className="" onSubmit={submitHandler}>
