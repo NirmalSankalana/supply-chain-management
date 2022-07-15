@@ -142,7 +142,7 @@ function AddStoreKeeper() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Submit
+              Add Shop Keeper
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>

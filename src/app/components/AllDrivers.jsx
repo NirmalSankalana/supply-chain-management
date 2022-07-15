@@ -5,12 +5,12 @@ import { api } from "../../config";
 import http from "../../services/httpService";
 import Auth from '../../services/user/authService';
 
-function AllTrains() {
+function AllDrivers() {
   
   return (
     <div className="card">
       <div className="card-body">
-        <h4 className="card-title"> Managers </h4>
+        <h4 className="card-title"> Drivers </h4>
         {/* <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
         </Alert> */}
@@ -18,7 +18,7 @@ function AllTrains() {
           <table className="table">
             <thead>
               <tr>
-                <th>Train ID</th> 
+                <th>User ID</th> 
                 <th>Store Keeper ID</th>
                 <th>First Name </th>
                 <th>Last Name </th>
@@ -46,4 +46,4 @@ function AllTrains() {
   );
 }
 
-export default AllTrains;
+export default AllDrivers;
