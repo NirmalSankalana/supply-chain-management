@@ -7,10 +7,10 @@ import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
 
-function AddStoreKeeper() {
-  const apiEndpoint = api.apiUrl + "/manager/register";
+function AddTruck() {
+  const apiEndpoint = api.apiUrl + "storekeeper/registerTruck";
   const history = useHistory()
-  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };
+  const initialValues = { truckNumber: "", capacity: ""};
   
   const [formValues, setformValues] = useState(initialValues);
   const [show, setShow] = useState(false);
@@ -64,18 +64,15 @@ function AddStoreKeeper() {
     return <Redirect to={'/login'} />
   }
 
-  if(user.role !== 'MANAGER'){
+  if(user.role !== 'STOREKEEPER'){
     return <Redirect to={'/logout'} />
   }
 
-  // if (user){
-  //   return <Redirect to="/dashboard" />
-  // }
   return (
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">Register New Storekeeper</h4>
+          <h4 className="card-title">Register New Truck</h4>
           <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
         </Alert>
@@ -83,12 +80,12 @@ function AddStoreKeeper() {
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">User Name</label>
+                  <label className="col-sm-3 col-form-label">Truck Number</label>
                   <div className="col-sm-9">
                     <Form.Control
                       type="text"
-                      name="username"
-                      value={formValues.username}
+                      name="truckNumber"
+                      value={formValues.truckNumber}
                       onChange={handleChange}
                       required
                     />
@@ -97,42 +94,12 @@ function AddStoreKeeper() {
               </div>
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Password</label>
+                  <label className="col-sm-3 col-form-label">Capacity</label>
                   <div className="col-sm-9">
                     <Form.Control
-                      type="password"
-                      name="password"
-                      value={formValues.password}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">First Name</label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="fName"
-                      value={formValues.fName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Last Name</label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="lName"
-                      value={formValues.lName}
+                      type="number"
+                      name="capacity"
+                      value={formValues.capacity}
                       onChange={handleChange}
                       required
                     />
@@ -151,4 +118,4 @@ function AddStoreKeeper() {
     </div>
   );
 }
-export default AddStoreKeeper;
+export default AddTruck;

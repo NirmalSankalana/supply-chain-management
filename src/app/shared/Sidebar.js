@@ -116,7 +116,7 @@ class Sidebar extends Component {
           <Link className={ this.isPathActive('/delivery-routes') ? 'nav-link active' : 'nav-link' } to="/delivery-routes"><Trans>Routes</Trans></Link>
           </li>
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
-          <Link className={ this.isPathActive('/truck') ? 'nav-link active' : 'nav-link' } to="/trucks"><Trans>Trucks</Trans></Link>
+          <Link className={ this.isPathActive('/truck') ? 'nav-link active' : 'nav-link' } to="/truck"><Trans>Trucks</Trans></Link>
           </li>
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
           <Link className={ this.isPathActive('/driver') ? 'nav-link active' : 'nav-link' } to="/driver"><Trans>Driver</Trans></Link>
