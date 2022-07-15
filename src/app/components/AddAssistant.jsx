@@ -7,78 +7,78 @@ import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
 
-function AddManager() {
-  const apiEndpoint = api.apiUrl + "/admin/register";
-  const history = useHistory()
-  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };  
-  const [formValues, setformValues] = useState(initialValues);
-  const [show, setShow] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('')
+function AddAssistant() {
+  // const apiEndpoint = api.apiUrl + "/admin/register";
+  // const history = useHistory()
+  // const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };  
+  // const [formValues, setformValues] = useState(initialValues);
+  // const [show, setShow] = useState(false);
+  // const [alertMessage, setAlertMessage] = useState('')
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setformValues({ ...formValues, [name]: value });
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setformValues({ ...formValues, [name]: value });
+  // };
 
-  const submitHandler = async (e) => {
+  // const submitHandler = async (e) => {
     
-    e.preventDefault();
-    console.log(formValues);
+  //   e.preventDefault();
+  //   console.log(formValues);
 
-    console.log(apiEndpoint)
-    try{
-      const response = await http.post(apiEndpoint, formValues);
-      console.log(response);
-    }catch(ex){
-      if (ex.response) {
-        console.log(ex.response);
-        switch (ex.response.status) {
-          case 400:
-            setShow(true)
-            setAlertMessage(ex.response.data.message);
-            break;
-          case 401:
-            setShow(true)
-            setAlertMessage(ex.response.data.message);
-            history.push({
-              pathname:"/logout"
-            })
+  //   console.log(apiEndpoint)
+  //   try{
+  //     const response = await http.post(apiEndpoint, formValues);
+  //     console.log(response);
+  //   }catch(ex){
+  //     if (ex.response) {
+  //       console.log(ex.response);
+  //       switch (ex.response.status) {
+  //         case 400:
+  //           setShow(true)
+  //           setAlertMessage(ex.response.data.message);
+  //           break;
+  //         case 401:
+  //           setShow(true)
+  //           setAlertMessage(ex.response.data.message);
+  //           history.push({
+  //             pathname:"/logout"
+  //           })
 
-            break;
-          case 404:
-            setShow(true)
-            setAlertMessage(ex.response.data.message);
-            break;
-          default:
-            break;
-        }
-      }
-    }
+  //           break;
+  //         case 404:
+  //           setShow(true)
+  //           setAlertMessage(ex.response.data.message);
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //   }
     
-  };
+  // };
 
-  const user = Auth.getCurrentUser()
+  // const user = Auth.getCurrentUser()
   
-  if(user == null){
-    return <Redirect to={'/login'} />
-  }
-
-  if(user.role !== 'ADMIN'){
-    return <Redirect to={'/logout'} />
-  }
-
-  // if (user){
-  //   return <Redirect to="/dashboard" />
+  // if(user == null){
+  //   return <Redirect to={'/login'} />
   // }
+
+  // if(user.role !== 'ADMIN'){
+  //   return <Redirect to={'/logout'} />
+  // }
+
+  // // if (user){
+  // //   return <Redirect to="/dashboard" />
+  // // }
   return (
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
           <h4 className="card-title">Register New Assistant</h4>
-          <Alert isOpen={show} color='danger'>
+          {/* <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
-        </Alert>
-          <form className="" onSubmit={submitHandler}>
+        </Alert> */}
+          <form className="" >
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
@@ -87,8 +87,8 @@ function AddManager() {
                     <Form.Control
                       type="text"
                       name="username"
-                      value={formValues.username}
-                      onChange={handleChange}
+                      // value={formValues.username}
+                      // onChange={handleChange}
                       required
                     />
                   </div>
@@ -101,8 +101,8 @@ function AddManager() {
                     <Form.Control
                       type="password"
                       name="password"
-                      value={formValues.password}
-                      onChange={handleChange}
+                      // value={formValues.password}
+                      // onChange={handleChange}
                       required
                     />
                   </div>
@@ -117,8 +117,8 @@ function AddManager() {
                     <Form.Control
                       type="text"
                       name="fName"
-                      value={formValues.firstName}
-                      onChange={handleChange}
+                      // value={formValues.firstName}
+                      // onChange={handleChange}
                       required
                     />
                   </div>
@@ -131,24 +131,8 @@ function AddManager() {
                     <Form.Control
                       type="text"
                       name="lName"
-                      value={formValues.lastName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">
-                    Manager Role
-                  </label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="managerRole"
-                      value={formValues.managerRole}
-                      onChange={handleChange}
+                      // value={formValues.lastName}
+                      // onChange={handleChange}
                       required
                     />
                   </div>
@@ -157,7 +141,7 @@ function AddManager() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Submit
+              Add Assistant
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>
@@ -166,4 +150,4 @@ function AddManager() {
     </div>
   );
 }
-export default AddManager;
+export default AddAssistant;

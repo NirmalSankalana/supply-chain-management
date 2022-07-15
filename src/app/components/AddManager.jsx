@@ -29,6 +29,8 @@ function AddManager() {
     console.log(apiEndpoint)
     try{
       const response = await http.post(apiEndpoint, formValues);
+      setShow(true)
+      setAlertMessage("New user added");
       console.log(response);
     }catch(ex){
       if (ex.response) {
@@ -158,7 +160,7 @@ function AddManager() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Submit
+              Add Manager
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>

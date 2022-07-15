@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, Route } from 'react-router-dom'
-import AddRoute from '../components/AddRoute';
-import AllRoutes from '../components/AllRoutes';
+import AddTruck from '../components/AddTruck';
+import AllTrucks from '../components/AllTrucks';
 
 function Trucks() {
     return (
@@ -12,20 +12,21 @@ function Trucks() {
                     <div className="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                         <ul className="quick-links ml-auto">
                             <li>
-                                <NavLink className="nav-link" to="/delivery-routes/all-routes">
+                                <NavLink className="nav-link" to="/truck/all-trucks">
                                     All Trucks
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className="nav-link " to="/delivery-routes/add-route">
+                                <NavLink className="nav-link " to="/truck/add-truck">
                                     Add Trucks
                                 </NavLink>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <Route exact path="/delivery-routes/all-routes" component={AllRoutes} />
-                <Route exact path="/delivery-routes/add-route" component={AddRoute} />
+                <Route exact path="/truck/all-trucks" component={AllTrucks} />
+                <Route exact path="/truck/add-truck" component={AddTruck} />
+                <Route exact path="/truck" component={AllTrucks} />
             </div>
         </div>
     )

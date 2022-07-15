@@ -26,6 +26,7 @@ function DeliveryRoutes() {
           </div>
           <Route exact path="/delivery-routes/all-routes" component={AllRoutes} />
           <Route exact path="/delivery-routes/add-route" component={AddRoute} />
+          <Route exact path="/delivery-routes" component={AllRoutes} />
         </div>
       </div>
 

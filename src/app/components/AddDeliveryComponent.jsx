@@ -7,11 +7,10 @@ import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
 
-function AddTruck() {
-  // const apiEndpoint = api.apiUrl + "storekeeper/registerTruck";
+function AddDeliveryComponent() {
+  // const apiEndpoint = api.apiUrl + "/admin/register";
   // const history = useHistory()
-  // const initialValues = { truckNumber: "", capacity: ""};
-  
+  // const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };  
   // const [formValues, setformValues] = useState(initialValues);
   // const [show, setShow] = useState(false);
   // const [alertMessage, setAlertMessage] = useState('')
@@ -64,15 +63,18 @@ function AddTruck() {
   //   return <Redirect to={'/login'} />
   // }
 
-  // if(user.role !== 'STOREKEEPER'){
+  // if(user.role !== 'ADMIN'){
   //   return <Redirect to={'/logout'} />
   // }
 
+  // // if (user){
+  // //   return <Redirect to="/dashboard" />
+  // // }
   return (
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">Register New Truck</h4>
+          <h4 className="card-title">Register New Driver</h4>
           {/* <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
         </Alert> */}
@@ -80,12 +82,12 @@ function AddTruck() {
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Truck Number</label>
+                  <label className="col-sm-3 col-form-label">Email</label>
                   <div className="col-sm-9">
                     <Form.Control
                       type="text"
-                      name="truckNumber"
-                      // value={formValues.truckNumber}
+                      name="username"
+                      // value={formValues.username}
                       // onChange={handleChange}
                       required
                     />
@@ -94,12 +96,42 @@ function AddTruck() {
               </div>
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Capacity</label>
+                  <label className="col-sm-3 col-form-label">Password</label>
                   <div className="col-sm-9">
                     <Form.Control
-                      type="number"
-                      name="capacity"
-                      // value={formValues.capacity}
+                      type="password"
+                      name="password"
+                      // value={formValues.password}
+                      // onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-3 col-form-label">First Name</label>
+                  <div className="col-sm-9">
+                    <Form.Control
+                      type="text"
+                      name="fName"
+                      // value={formValues.firstName}
+                      // onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-3 col-form-label">Last Name</label>
+                  <div className="col-sm-9">
+                    <Form.Control
+                      type="text"
+                      name="lName"
+                      // value={formValues.lastName}
                       // onChange={handleChange}
                       required
                     />
@@ -109,7 +141,7 @@ function AddTruck() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Add Truck
+              Add Driver
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>
@@ -118,4 +150,4 @@ function AddTruck() {
     </div>
   );
 }
-export default AddTruck;
+export default AddDeliveryComponent;

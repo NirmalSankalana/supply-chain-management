@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink, Route } from 'react-router-dom'
 import AddTrain from '../components/AddTrain'
 import AllTrains from '../components/AllTrains'
+import AssignOrders from '../components/AssignOrders'
 
 function Train() {
   return (   
@@ -21,11 +22,17 @@ function Train() {
                                     All Trains
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink className="nav-link " to="/train/assign-orders">
+                                    Assign Orders
+                                </NavLink>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <Route exact path="/train/all-trains" component={AllTrains} />
                 <Route exact path="/train/add-train" component={AddTrain} />
+                <Route exact path="/train/assign-orders" component={AssignOrders} />
                 <Route exact path="/train" component={AllTrains} />
             </div>
         </div>
