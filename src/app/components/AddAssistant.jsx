@@ -10,8 +10,7 @@ import {Alert} from "reactstrap";
 function AddManager() {
   const apiEndpoint = api.apiUrl + "/admin/register";
   const history = useHistory()
-  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };
-  
+  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };  
   const [formValues, setformValues] = useState(initialValues);
   const [show, setShow] = useState(false);
   const [alertMessage, setAlertMessage] = useState('')
@@ -75,7 +74,7 @@ function AddManager() {
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">Register New Manager</h4>
+          <h4 className="card-title">Register New Assistant</h4>
           <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
         </Alert>
