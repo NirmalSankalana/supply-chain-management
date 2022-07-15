@@ -1,13 +1,13 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Redirect, useHistory } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
+import { Alert } from "reactstrap";
 
 import { api } from "../../config";
 import http from "../../services/httpService";
 import UpdateManager from "./UpdateManager";
 import Auth from '../../services/user/authService';
 
-function AllManagers() {
+function AllAssistants() {
   const apiEndpoint = api.apiUrl + "/admin/getManagers";
   
   const [managers, setManagers] = useState([]);
@@ -138,4 +138,4 @@ function AllManagers() {
   );
 }
 
-export default AllManagers;
+export default AllAssistants;
