@@ -3,7 +3,7 @@ import { NavLink, Route } from 'react-router-dom'
 import AddManager from '../components/AddManager'
 import AllManagers from '../components/AllManagers'
 
-function Assistant() {
+function Manager() {
   return (
 
               
@@ -34,4 +34,4 @@ function Assistant() {
   )
 }
 
-export default Assistant
+export default Manager

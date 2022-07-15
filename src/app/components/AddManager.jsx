@@ -29,6 +29,8 @@ function AddManager() {
     console.log(apiEndpoint)
     try{
       const response = await http.post(apiEndpoint, formValues);
+      setShow(true)
+      setAlertMessage("New user added");
       console.log(response);
     }catch(ex){
       if (ex.response) {

@@ -6,11 +6,10 @@ import http from "../../services/httpService";
 import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
-
 function AddStoreKeeper() {
   const apiEndpoint = api.apiUrl + "/manager/register";
   const history = useHistory()
-  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };
+  const initialValues = { username: "", password: "", fName: "", lName: ""};
   
   const [formValues, setformValues] = useState(initialValues);
   const [show, setShow] = useState(false);
