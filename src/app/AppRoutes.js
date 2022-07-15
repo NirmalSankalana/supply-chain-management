@@ -78,7 +78,7 @@ class AppRoutes extends Component {
           <Route path="/truck" component={Trucks} />
           <Route path="/driver" component={Driver} />
           <Route path="/delivery" component={Delivery} />
-          <Route path="/assistants" component={Assistant} />
+          <Route path="/assistant" component={Assistant} />
 
           <Route path="/manager" component={Manager} />
           <Route path="/store-keeper" component={StoreKeeper} />

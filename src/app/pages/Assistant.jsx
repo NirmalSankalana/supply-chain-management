@@ -13,12 +13,12 @@ function Assistant() {
                         <ul className="quick-links ml-auto">
                             <li>
                                 <NavLink className="nav-link" to="/delivery-routes/all-routes">
-                                    All Trucks
+                                    All Assistants
                                 </NavLink>
                             </li>
                             <li>
                                 <NavLink className="nav-link " to="/delivery-routes/add-route">
-                                    Add Trucks
+                                    Add Assistants
                                 </NavLink>
                             </li>
                         </ul>
