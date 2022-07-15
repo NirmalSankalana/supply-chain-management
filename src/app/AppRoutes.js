@@ -38,6 +38,9 @@ const AddManager = lazy(() => import("../app/components/AddManager"));
 const AllManagers = lazy(() => import("../app/components/AllManagers"));
 
 
+const DashboardAdmin = lazy(() => import("./dashboard/DashboardAdmin"));
+const DashboardManager = lazy(() => import("./dashboard/DashboardManager"))
+const DashboardStoreKeeper = lazy(() => import("./dashboard/DashboardStoreKeeper"))
 
 const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
 const Train = lazy(() => import("./pages/Train"));
@@ -83,7 +86,9 @@ class AppRoutes extends Component {
           <Route path="/manager" component={Manager} />
           <Route path="/store-keeper" component={StoreKeeper} />
           <Route path="/train" component={Train} />
-
+          <Route path="/dashboard-admin" component={DashboardAdmin} />
+          <Route path="/dashboard-manager" component={DashboardManager} />
+          <Route path="/dashboard-storekeeper" component={DashboardStoreKeeper} />
           <Redirect to="/login" />
         </Switch>
       </Suspense>
