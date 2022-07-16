@@ -45,6 +45,7 @@ const AllRoutes = lazy(() => import("../app/components/AllRoutes"));
 const DashboardAdmin = lazy(() => import("./dashboard/DashboardAdmin"));
 const DashboardManager = lazy(() => import("./dashboard/DashboardManager"))
 const DashboardStoreKeeper = lazy(() => import("./dashboard/DashboardStoreKeeper"))
+const DashboardAssistant = lazy(() => import("./dashboard/DashboardAssistant"))
 
 const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
 
@@ -58,6 +59,7 @@ const AllStorekeepers = lazy(() => import("../app/components/AllStoreKeepers"));
 const UpdateTrain = lazy(() => import("../app/components/UpdateTrain"));
 const AddTrain = lazy(() => import("../app/components/AddTrain"));
 const AllTrains = lazy(() => import("../app/components/AllTrains"));
+
 
 class AppRoutes extends Component {
   render() {
@@ -113,6 +115,7 @@ class AppRoutes extends Component {
           <Route path="/dashboard-admin" component={DashboardAdmin} />
           <Route path="/dashboard-manager" component={DashboardManager} />
           <Route path="/dashboard-storekeeper" component={DashboardStoreKeeper} />
+          <Route path="/dashboard-assistant" component={DashboardAssistant} />
           <Redirect to="/login" />
         </Switch>
       </Suspense>
