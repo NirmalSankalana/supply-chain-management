@@ -8,11 +8,12 @@ import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
 
-function AddTrain() {
+function UpdateTrain(props) {
 
-  const apiEndpoint = api.apiUrl + "/manager/registerTrain";
+  const apiEndpoint = api.apiUrl + "/manager/updateTrain";
+  const oldTrain = props.history.location.state.train;
   const history = useHistory()
-  const initialValues = { startCity: "", endCity: "", capacity: ""};
+  const initialValues = { startCity: oldTrain['Start_City'], endCity: oldTrain['End_City'], capacity: oldTrain['Capacity']};
   
   const [formValues, setformValues] = useState(initialValues);
   const [showErr, setShowErr] = useState(false);
@@ -38,7 +39,7 @@ function AddTrain() {
       if(response.statusCode === 200){
         setformValues(initialValues)
         setShowPass(true)
-        setAlertMessage("Successfully Inserted!");
+        setAlertMessage("Successfully Updated!");
       }
     }catch(ex){
       if (ex.response) {
@@ -85,7 +86,7 @@ function AddTrain() {
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">Register New Train</h4>
+          <h4 className="card-title">Update Train</h4>
           <Alert isOpen={showErr} color='danger'>
                   <p>{alertMessage}</p>
         </Alert>
@@ -148,7 +149,7 @@ function AddTrain() {
                       name="capacity"
                       value={formValues.capacity}
                       onChange={handleChange}
-                      required
+                      readOnly={true}
                     />
                   </div>
                 </Form.Group>
@@ -156,7 +157,7 @@ function AddTrain() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Add Train
+              Update Train
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>
@@ -165,4 +166,4 @@ function AddTrain() {
     </div>
   );
 }
-export default AddTrain;
+export default UpdateTrain;

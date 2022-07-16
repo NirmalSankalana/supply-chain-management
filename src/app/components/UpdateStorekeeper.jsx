@@ -7,12 +7,11 @@ import axios from "axios";
 import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
-
-function AddTrain() {
-
-  const apiEndpoint = api.apiUrl + "/manager/registerTrain";
+function UpdateStoreKeeper(props) {
+  const apiEndpoint = api.apiUrl + "/manager/update";
+  const oldStoreKeeper = props.history.location.state.storekeeper;
   const history = useHistory()
-  const initialValues = { startCity: "", endCity: "", capacity: ""};
+  const initialValues = { username: oldStoreKeeper['Username'], fName: oldStoreKeeper['First_Name'], lName: oldStoreKeeper['Last_Name']};
   
   const [formValues, setformValues] = useState(initialValues);
   const [showErr, setShowErr] = useState(false);
@@ -31,25 +30,28 @@ function AddTrain() {
 
     console.log(apiEndpoint)
     try{
-      let token = localStorage.getItem("token");
       // const response = await http.post(apiEndpoint, formValues);
+      let token = localStorage.getItem("token");
       const response = await axios.post(apiEndpoint, {headers: { Authorization: `Bearer ${token}` }})
       console.log(response);
       if(response.statusCode === 200){
         setformValues(initialValues)
+        setShowErr(false);
         setShowPass(true)
-        setAlertMessage("Successfully Inserted!");
+        setAlertMessage("Successfully Updated!");
       }
     }catch(ex){
       if (ex.response) {
         console.log(ex.response);
         switch (ex.response.status) {
           case 400:
-            setShowErr(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             break;
           case 401:
-            setShowErr(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             history.push({
               pathname:"/logout"
@@ -57,7 +59,8 @@ function AddTrain() {
 
             break;
           case 404:
-            setShowErr(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             break;
           default:
@@ -85,7 +88,7 @@ function AddTrain() {
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">Register New Train</h4>
+          <h4 className="card-title">Update Storekeeper</h4>
           <Alert isOpen={showErr} color='danger'>
                   <p>{alertMessage}</p>
         </Alert>
@@ -94,59 +97,58 @@ function AddTrain() {
         </Alert>
           <form className="" onSubmit={submitHandler}>
             <div className="row">
-              {/* <div className="col-md-6">
+              <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Train ID</label>
+                  <label className="col-sm-3 col-form-label">User Name</label>
                   <div className="col-sm-9">
                     <Form.Control
                       type="text"
-                      name="trainId"
-                      value={formValues.trainId}
+                      name="username"
+                      value={formValues.username}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </div>
+              {/* <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-3 col-form-label">Password</label>
+                  <div className="col-sm-9">
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      value={formValues.password}
                       onChange={handleChange}
                       required
                     />
                   </div>
                 </Form.Group>
               </div> */}
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Start City</label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="startCity"
-                      value={formValues.startCity}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">End City</label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="endCity"
-                      value={formValues.endCity}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
             </div>
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Capacity</label>
+                  <label className="col-sm-3 col-form-label">First Name</label>
                   <div className="col-sm-9">
                     <Form.Control
-                      type="number"
-                      name="capacity"
-                      value={formValues.capacity}
+                      type="text"
+                      name="fName"
+                      value={formValues.fName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-3 col-form-label">Last Name</label>
+                  <div className="col-sm-9">
+                    <Form.Control
+                      type="text"
+                      name="lName"
+                      value={formValues.lName}
                       onChange={handleChange}
                       required
                     />
@@ -156,7 +158,7 @@ function AddTrain() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Add Train
+              Update Shop Keeper
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>
@@ -165,4 +167,4 @@ function AddTrain() {
     </div>
   );
 }
-export default AddTrain;
+export default UpdateStoreKeeper;
