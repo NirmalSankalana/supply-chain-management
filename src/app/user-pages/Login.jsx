@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect,useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
 // import "../styles/login.css";
 import Auth from '../../services/user/authService';
@@ -84,84 +84,83 @@ export default function Login() {
       }
     }
   };
-  if (Auth.getCurrentUser()){
+  if (Auth.getCurrentUser()) {
     console.log("KKKKKKKK")
     console.log(Auth.getCurrentUser())
     // history.push("/dashboard")
     return <Redirect to="/dashboard" />
   }
-    
+
   else
     return (
-    <div className="login">
-      <div className="">
-        <div className="">
-          <div className="position-absolute top-50 start-50 translate-middle">
-            <Card>
-              <CardBody>
-                <h1 className="">Supplier Management System</h1>
+      <div>
+        <div className="d-flex align-items-center auth px-">
+          <div className="row w-100 mx-0">
+            <div className="col-lg-4 mx-auto">
+              <div className="auth-form-light text-left py-5 px-4 px-sm-5">
+
+                <h4>Hello! let's get started</h4>
+                <h6 className="font-weight-light">Sign in to continue.</h6>
                 <br></br>
                 <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
                 </Alert>
-                <div className="row">
-                  <Form onSubmit={handleSubmit}>
-                    <FormGroup>
-                      <Label htmlFor="username" size="lg">
-                        Username
-                      </Label>
-                      <Input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value={formValues.username}
-                        onChange={handleChange}
-                      />
-                      <p
-                        className="fst-italic fw-bolder"
-                        style={{ color: "#f93154" }}
-                      >
-                        {formErrors.username}
-                      </p>
-                    </FormGroup>
-                    <FormGroup>
-                      <Label htmlFor="password" size="lg">
-                        Password
-                      </Label>
-                      <Input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formValues.password}
-                        onChange={handleChange}
-                      />
-                      <p
-                        className="fst-italic fw-bolder"
-                        style={{ color: "#f93154" }}
-                      >
-                        {formErrors.password}
-                      </p>
-                    </FormGroup>
 
-                    <br></br>
-                    <div className="d-grid gap-2">
-                      <Button
-                        size="lg"
-                        type="submit"
-                        value="submit"
-                        color="primary"
-                        className="btn btn-primary"
-                      >
-                        Login
-                      </Button>
-                    </div>
-                  </Form>
-                </div>
-              </CardBody>
-            </Card>
+                <Form onSubmit={handleSubmit}>
+                  <FormGroup>
+                    <Label htmlFor="username" size="lg">
+                      Username
+                    </Label>
+                    <Input
+                      type="text"
+                      id="username"
+                      name="username"
+                      value={formValues.username}
+                      onChange={handleChange}
+                    />
+                    <p
+                      className="fst-italic fw-bolder"
+                      style={{ color: "#f93154" }}
+                    >
+                      {formErrors.username}
+                    </p>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label htmlFor="password" size="lg">
+                      Password
+                    </Label>
+                    <Input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={formValues.password}
+                      onChange={handleChange}
+                    />
+                    <p
+                      className="fst-italic fw-bolder"
+                      style={{ color: "#f93154" }}
+                    >
+                      {formErrors.password}
+                    </p>
+                  </FormGroup>
+
+                  <br></br>
+                  <div className="d-grid gap-2">
+                    <Button
+                 
+                      type="submit"
+                      value="submit"
+                      color="primary"
+                      className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
+                    >
+                      Login
+                    </Button>
+                  </div>
+                </Form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
 }

@@ -42,21 +42,18 @@ const UpdateRoute = lazy(() => import("./components/UpdateRoute"));
 const AddRoute = lazy(() => import("../app/components/AddRoute"));
 const AllRoutes = lazy(() => import("../app/components/AllRoutes"));
 
-<<<<<<< HEAD
 const DashboardAdmin = lazy(() => import("./dashboard/DashboardAdmin"));
 const DashboardManager = lazy(() => import("./dashboard/DashboardManager"))
 const DashboardStoreKeeper = lazy(() => import("./dashboard/DashboardStoreKeeper"))
 
 const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
-=======
-// const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
->>>>>>> d68ae374d4f22e17291b37c1e11299db7b0b5d8a
+
 const Train = lazy(() => import("./pages/Train"));
 
 // manager routes
-const UpdateStorekeeper = lazy(() => import("./components/UpdateStorekeeper"));
-const AddStorekeeper = lazy(() => import("../app/components/AddStorekeeper"));
-const AllStorekeepers = lazy(() => import("../app/components/AllStorekeepers"));
+const UpdateStorekeeper = lazy(() => import("../app/components/UpdateStorekeeper"));
+const AddStorekeeper = lazy(() => import("../app/components/AddStoreKeeper"));
+const AllStorekeepers = lazy(() => import("../app/components/AllStoreKeepers"));
 
 const UpdateTrain = lazy(() => import("../app/components/UpdateTrain"));
 const AddTrain = lazy(() => import("../app/components/AddTrain"));
