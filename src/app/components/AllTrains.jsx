@@ -1,34 +1,37 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Redirect, useHistory } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
-
+import { Alert} from "reactstrap";
 import { api } from "../../config";
 import http from "../../services/httpService";
-import UpdateManager from "./UpdateManager";
+import axios from "axios";
 import Auth from '../../services/user/authService';
 
-function AllManagers() {
-  const apiEndpoint = api.apiUrl + "/admin/getManagers";
+function AllTrains() {
+
+  const apiEndpoint = api.apiUrl + "/manager/trains";
   
-  const [managers, setManagers] = useState([]);
+  const [trains, setTrains] = useState([]);
   const [show, setShow] = useState(false);
   const [alertMessage, setAlertMessage] = useState('')
 
   const history = useHistory()
 
-  const updateData = (manager)=>{  
-    console.log(manager)
+  let token = localStorage.getItem("token");
+
+  const updateData = (train)=>{  
+    console.log(train)
     history.push({
-      pathname:"/admin/update",
-      state: {manager:manager}
+      pathname:"/updateTrain",
+      state: {train:train}
     })
   }
 
-  const deleteData = (manager)=>{
-    const endPoint = api.apiUrl + '/delete'
-    console.log(manager)
+  const deleteData =async (train)=>{
+    const endPoint = api.apiUrl + '/manager/deleteTrain';
+    console.log(train)
     try{
-      const response = http.delete(endPoint,manager)
+      // const response = http.delete(endPoint,train)
+      const response = await axios.delete(endPoint, {headers: {Authorization: `Bearer ${token}`,},data: {trainId:train['Train_ID']},})
       console.log(response)
     }catch(ex){
       if (ex.response) {
@@ -59,12 +62,12 @@ function AllManagers() {
   }
 
   useEffect(() => {
-      http.get(apiEndpoint).then(response =>{
-        let manager_data = response.data.result.result
-        // console.log(response.data.result.result)
-        setManagers(manager_data);
-        managers.map((manager,index)=>{
-            console.log(manager)
+      axios.get(apiEndpoint , {headers: { Authorization: `Bearer ${token}` }}).then(response =>{
+        let train_data = response.data.result
+        console.log(response.data.result)
+        setTrains(train_data);
+        trains.map((train,index)=>{
+            console.log(train)
         })
     }).catch(ex=>{
       if (ex.response) {
@@ -96,9 +99,10 @@ function AllManagers() {
     return <Redirect to={'/login'} />
   }
 
-  if(user.role !== 'ADMIN'){
+  if(user.role !== 'MANAGER'){
     return <Redirect to={'/dashboard'} />
   }
+  
   return (
     <div className="card">
       <div className="card-body">
@@ -110,23 +114,23 @@ function AllManagers() {
           <table className="table">
             <thead>
               <tr>
-                <th>Staff ID</th> 
-                <th>First Name </th>
-                <th>Last Name </th>
-                <th>Role</th>
+                <th>Train ID</th> 
+                <th>Start City</th>
+                <th>End City</th>
+                <th>Capacity </th>
                 <th>Update</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {managers.map((manager,index) => 
-                (<tr key={manager['User_ID']}>
-                  <td>{manager['Staff_ID']}</td> 
-                  <td>{manager['First_Name']}</td>
-                  <td>{manager['Last_Name']}</td> 
-                  <td>{manager['Role']}</td>
-                  <th><button type="button" className="btn btn-warning btn-rounded" onClick={()=>updateData(manager)}>Update</button></th>
-                  <th><button type="button" className="btn btn-danger btn-rounded" onClick={()=>deleteData(manager)}>Delete</button></th>
+              {trains.map((train,index) => 
+                (<tr key={train['Train_ID']}>
+                <td>{train['Train_ID']}</td> 
+                  <td>{train['Start_City']}</td> 
+                  <td>{train['End_City']}</td>
+                  <td>{train['Capacity']}</td> 
+                  <th><button type="button" className="btn btn-warning btn-rounded" onClick={()=>updateData(train)}>Update</button></th>
+                  <th><button type="button" className="btn btn-danger btn-rounded" onClick={()=>deleteData(train)}>Delete</button></th>
                 </tr>)
               )}
             </tbody>
@@ -138,4 +142,4 @@ function AllManagers() {
   );
 }
 
-export default AllManagers;
+export default AllTrains;

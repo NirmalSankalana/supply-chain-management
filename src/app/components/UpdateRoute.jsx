@@ -7,11 +7,12 @@ import http from "../../services/httpService";
 import Auth from "../../services/user/authService";
 import { Button,FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
 
-function UpdateManager(props) {
-    const oldManager = props.history.location.state.manager;
-    const apiEndpoint = api.apiUrl + "/admin/register";
-    console.log(oldManager)
-    const initialValues = { username:oldManager['User_ID'] , fName: oldManager['First_Name'], lName: oldManager['Last_Name'], managerRole: oldManager['Role'] };
+function UpdateRoute(props) {
+    const oldRoute = props.history.location.state.deliveryRoute;
+
+    const apiEndpoint = api.apiUrl +  "/storekeeper/registerRoute";
+    console.log(oldRoute)
+    const initialValues = { routeId:oldRoute['Route_ID'] , startCity: oldRoute['Start_City'], endCity: oldRoute['End_City'] };
     const [formValues, setformValues] = useState(initialValues);
     const [show, setShow] = useState(false);
     const [alertMessage, setAlertMessage] = useState('')
@@ -36,7 +37,6 @@ function UpdateManager(props) {
             switch (ex.response.status) {
               case 400:
                 setShow(true)
-
                 setAlertMessage(ex.response.data.message);
                 break;
               case 401:
@@ -55,100 +55,73 @@ function UpdateManager(props) {
               default:
                 break;
             }
-          }
-         
+          }  
       }
-      
     };
     const user = Auth.getCurrentUser()
-  
+    console.log(user)
     if(user == null){
       return <Redirect to={'/login'} />
     }
   
-    if(user.role !== 'ADMIN'){
+    if(user.role !== 'STOREKEEPER'){
       return <Redirect to={'/dashboard'} />
     }
     return (
-      <div className="col-12 grid-margin">
+        <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
           <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
         </Alert>
-            <h4 className="card-title">Register New Manager</h4>
-            <form className="" onSubmit={submitHandler}>
+            <h4 className="card-title"> Add New Delivery Route </h4>
+            <form className="" onSubmit={submitHandler} >
               <div className="row">
-                <div className="col-md-6">
+              <div className="col-md-6">
+                
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">Email</label>
+                    <label className="col-sm-3 col-form-label">
+                    
+                      Route Id
+                    </label>
                     <div className="col-sm-9">
-                      <Form.Control
-                        type="text"
-                        name="username"
-                        value={formValues.username}
-                        onChange={handleChange}
-                        readOnly={true}
-                      />
-                    </div>
-                  </Form.Group>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6">
-                  <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">First Name</label>
-                    <div className="col-sm-9">
-                      <Form.Control
-                        type="text"
-                        name="fName"
-                        value={formValues.fName}
-                        onChange={handleChange}
-                        required
-                      />
+                      <Form.Control type="text" name="routeId" value={formValues.routeId} onChange={handleChange} required disabled/>
                     </div>
                   </Form.Group>
                 </div>
                 <div className="col-md-6">
+                
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">Last Name</label>
+                    <label className="col-sm-3 col-form-label">
+                    
+                      Start City
+                    </label>
                     <div className="col-sm-9">
-                      <Form.Control
-                        type="text"
-                        name="lName"
-                        value={formValues.lName}
-                        onChange={handleChange}
-                        required
-                      />
+                      <Form.Control type="text" name="startCity" value={formValues.startCity} onChange={handleChange} required/>
                     </div>
                   </Form.Group>
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">
-                      Manager Role
+                      
+                      End City
                     </label>
                     <div className="col-sm-9">
-                      <Form.Control
-                        type="text"
-                        name="managerRole"
-                        value={formValues.managerRole}
-                        onChange={handleChange}
-                        required
-                      />
+                      <Form.Control type="text" name="endCity" value={formValues.endCity} onChange={handleChange} required/>
                     </div>
                   </Form.Group>
                 </div>
               </div>
-  
               <button type="submit" className="btn btn-primary mr-2">
-                Submit
+                Add Route
               </button>
-              {/* <button className="btn btn-light">Cancel</button> */}
+              <button className="btn btn-light"> Cancel </button>
             </form>
           </div>
         </div>
       </div>
+
     );
   }
-  export default UpdateManager;
+  export default UpdateRoute;

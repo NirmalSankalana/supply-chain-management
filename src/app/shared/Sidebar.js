@@ -116,7 +116,7 @@ class Sidebar extends Component {
           <Link className={ this.isPathActive('/delivery-routes') ? 'nav-link active' : 'nav-link' } to="/delivery-routes"><Trans>Routes</Trans></Link>
           </li>
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
-          <Link className={ this.isPathActive('/truck') ? 'nav-link active' : 'nav-link' } to="/trucks"><Trans>Trucks</Trans></Link>
+          <Link className={ this.isPathActive('/truck') ? 'nav-link active' : 'nav-link' } to="/truck"><Trans>Trucks</Trans></Link>
           </li>
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
           <Link className={ this.isPathActive('/driver') ? 'nav-link active' : 'nav-link' } to="/driver"><Trans>Driver</Trans></Link>
@@ -128,8 +128,15 @@ class Sidebar extends Component {
           <Link className={ this.isPathActive('/assistant') ? 'nav-link active' : 'nav-link' } to="/assistant"><Trans>Assistant</Trans></Link>
           </li>
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
-          <Link className={ this.isPathActive('/assistant') ? 'nav-link active' : 'nav-link' } to="/manager"><Trans>Manager</Trans></Link>
+          <Link className={ this.isPathActive('/manager') ? 'nav-link active' : 'nav-link' } to="/manager"><Trans>Manager</Trans></Link>
           </li>
+          <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
+          <Link className={ this.isPathActive('/storekeeper') ? 'nav-link active' : 'nav-link' } to="/storekeeper"><Trans>Store Keeper</Trans></Link>
+          </li>
+          <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
+          <Link className={ this.isPathActive('/train') ? 'nav-link active' : 'nav-link' } to="/train"><Trans>Train</Trans></Link>
+          </li>
+
 
           
         </ul>

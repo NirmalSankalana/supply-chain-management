@@ -1,31 +1,32 @@
 import React from 'react'
 import { NavLink, Route } from 'react-router-dom'
-import AddRoute from '../components/AddRoute'
-import AllRoutes from '../components/AllRoutes'
+import AddDriver from '../components/AddDriver'
+import AllDrivers from '../components/AllDrivers'
 
 function Driver() {
   return (
     <div className="row">
             <div className="col-12">
                 <div className="page-header">
-                    <h4 className="page-title">Trucks</h4>
+                    <h4 className="page-title">Driver</h4>
                     <div className="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                         <ul className="quick-links ml-auto">
                             <li>
-                                <NavLink className="nav-link" to="/delivery-routes/all-routes">
-                                    All Trucks
+                                <NavLink className="nav-link" to="/driver/all-drivers">
+                                    All Driver
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className="nav-link " to="/delivery-routes/add-route">
-                                    Add Trucks
+                                <NavLink className="nav-link " to="/driver/add-driver">
+                                    Add Driver
                                 </NavLink>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <Route exact path="/delivery-routes/all-routes" component={AllRoutes} />
-                <Route exact path="/delivery-routes/add-route" component={AddRoute} />
+                <Route exact path="/driver/all-drivers" component={AllDrivers} />
+                <Route exact path="/driver/add-driver" component={AddDriver} />
+                <Route exact path="/driver" component={AllDrivers} />
             </div>
         </div>
   )

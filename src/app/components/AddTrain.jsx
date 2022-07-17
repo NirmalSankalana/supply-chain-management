@@ -3,17 +3,20 @@ import { Form } from "react-bootstrap";
 import { useHistory,Redirect } from "react-router-dom";
 import { api } from "../../config.js";
 import http from "../../services/httpService";
+import axios from "axios";
 import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
 
-function AddManager() {
-  const apiEndpoint = api.apiUrl + "/admin/register";
+function AddTrain() {
+
+  const apiEndpoint = api.apiUrl + "/manager/registerTrain";
   const history = useHistory()
-  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };
+  const initialValues = { startCity: "", endCity: "", capacity: ""};
   
   const [formValues, setformValues] = useState(initialValues);
-  const [show, setShow] = useState(false);
+  const [showErr, setShowErr] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [alertMessage, setAlertMessage] = useState('')
 
   const handleChange = (e) => {
@@ -28,20 +31,25 @@ function AddManager() {
 
     console.log(apiEndpoint)
     try{
-      const response = await http.post(apiEndpoint, formValues);
-      setShow(true)
-      setAlertMessage("New user added");
+      let token = localStorage.getItem("token");
+      // const response = await http.post(apiEndpoint, formValues);
+      const response = await axios.post(apiEndpoint, {headers: { Authorization: `Bearer ${token}` }})
       console.log(response);
+      if(response.statusCode === 200){
+        setformValues(initialValues)
+        setShowPass(true)
+        setAlertMessage("Successfully Inserted!");
+      }
     }catch(ex){
       if (ex.response) {
         console.log(ex.response);
         switch (ex.response.status) {
           case 400:
-            setShow(true)
+            setShowErr(true)
             setAlertMessage(ex.response.data.message);
             break;
           case 401:
-            setShow(true)
+            setShowErr(true)
             setAlertMessage(ex.response.data.message);
             history.push({
               pathname:"/logout"
@@ -49,7 +57,7 @@ function AddManager() {
 
             break;
           case 404:
-            setShow(true)
+            setShowErr(true)
             setAlertMessage(ex.response.data.message);
             break;
           default:
@@ -66,7 +74,7 @@ function AddManager() {
     return <Redirect to={'/login'} />
   }
 
-  if(user.role !== 'ADMIN'){
+  if(user.role !== 'MANAGER'){
     return <Redirect to={'/logout'} />
   }
 
@@ -77,34 +85,52 @@ function AddManager() {
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">Register New Manager</h4>
-          <Alert isOpen={show} color='danger'>
+          <h4 className="card-title">Register New Train</h4>
+          <Alert isOpen={showErr} color='danger'>
+                  <p>{alertMessage}</p>
+        </Alert>
+        <Alert isOpen={showPass} color='success'>
                   <p>{alertMessage}</p>
         </Alert>
           <form className="" onSubmit={submitHandler}>
             <div className="row">
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Email</label>
+                  <label className="col-sm-3 col-form-label">Train ID</label>
                   <div className="col-sm-9">
                     <Form.Control
                       type="text"
-                      name="username"
-                      value={formValues.username}
+                      name="trainId"
+                      value={formValues.trainId}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </div> */}
+              <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-3 col-form-label">Start City</label>
+                  <div className="col-sm-9">
+                    <Form.Control
+                      type="text"
+                      name="startCity"
+                      value={formValues.startCity}
                       onChange={handleChange}
                       required
                     />
                   </div>
                 </Form.Group>
               </div>
+
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Password</label>
+                  <label className="col-sm-3 col-form-label">End City</label>
                   <div className="col-sm-9">
                     <Form.Control
-                      type="password"
-                      name="password"
-                      value={formValues.password}
+                      type="text"
+                      name="endCity"
+                      value={formValues.endCity}
                       onChange={handleChange}
                       required
                     />
@@ -115,42 +141,12 @@ function AddManager() {
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">First Name</label>
+                  <label className="col-sm-3 col-form-label">Capacity</label>
                   <div className="col-sm-9">
                     <Form.Control
-                      type="text"
-                      name="fName"
-                      value={formValues.firstName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Last Name</label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="lName"
-                      value={formValues.lastName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">
-                    Manager Role
-                  </label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="managerRole"
-                      value={formValues.managerRole}
+                      type="number"
+                      name="capacity"
+                      value={formValues.capacity}
                       onChange={handleChange}
                       required
                     />
@@ -160,7 +156,7 @@ function AddManager() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Add Manager
+              Add Train
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>
@@ -169,4 +165,4 @@ function AddManager() {
     </div>
   );
 }
-export default AddManager;
+export default AddTrain;

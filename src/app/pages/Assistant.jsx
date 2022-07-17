@@ -1,31 +1,32 @@
 import React from 'react'
 import { NavLink, Route } from 'react-router-dom'
-import AddRoute from '../components/AddRoute'
-import AllRoutes from '../components/AllRoutes'
+import AllAssistants from '../components/AllAssistants'
+import AddAssistant from '../components/AddAssistant'
 
 function Assistant() {
   return (
     <div className="row">
             <div className="col-12">
                 <div className="page-header">
-                    <h4 className="page-title">Trucks</h4>
+                    <h4 className="page-title">Assistants</h4>
                     <div className="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                         <ul className="quick-links ml-auto">
                             <li>
-                                <NavLink className="nav-link" to="/delivery-routes/all-routes">
-                                    All Trucks
+                                <NavLink className="nav-link" to="/assistant/all-assistants">
+                                    All Assistants
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className="nav-link " to="/delivery-routes/add-route">
-                                    Add Trucks
+                                <NavLink className="nav-link " to="/assistant/add-assistants">
+                                    Add Assistants
                                 </NavLink>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <Route exact path="/delivery-routes/all-routes" component={AllRoutes} />
-                <Route exact path="/delivery-routes/add-route" component={AddRoute} />
+                <Route exact path="/assistant/all-assistants" component={AllAssistants} />
+                <Route exact path="/assistant/add-assistants" component={AddAssistant} />
+                <Route exact path="/assistant" component={AllAssistants} />
             </div>
         </div>
   )

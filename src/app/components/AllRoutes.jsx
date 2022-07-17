@@ -1,101 +1,149 @@
-import React, { Component } from "react";
-import { Toast } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
-import allRoutesService from "../../services/shopKeeper/allRoutesService";
-import ViewAllTable from "./common/ViewAllTable";
+import React, { useEffect, useState } from "react";
+// import { Alert, Toast } from "react-bootstrap";
+import { Redirect, useHistory } from "react-router-dom";
+import {api} from "../../config";
+import Auth from '../../services/user/authService';
+import http from "../../services/httpService";
+import axios from "axios";
+import {Alert} from "reactstrap";
 
 
 
+function AllRoutes(){
+  const apiEndpoint = api.apiUrl + "/storekeeper/routes";
+  
+  const [deliveryRoutes, setDeliveryRoutes] = useState([]);
+  const [show, setShow] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('')
 
-export class AllRoutes extends Component {
-    state = {
-        isRedirect: false,
-        columnNames: ["id", "Start city", "End city"],
-        tableData: [],
-    };
+  const history = useHistory()
 
-    componentDidMount = async () => {
-        const tableData = [];
-        try {
-            const response = await allRoutesService.getDeliveryRoutes();
+  const updateData = (deliveryRoute)=>{  
+    console.log(deliveryRoute)
+    history.push({
+      pathname:"/storekeeper/update-route",
+      state: {deliveryRoute:deliveryRoute}
+    })
+  }
 
-            if (response.status === 200) {
-                if (response.data.code === 200) {
-                    const response_data = response.data.data;
-                    if (response_data.length > 0) {
-                        for (let i = 0; i < response_data.length; i++) {
-                            let row = {
-                                id: response_data[i].id,
-                                "Start city": response_data[i].start_city,
-                                "End city": response_data[i].end_city,
-                            };
-                            tableData.push(row);
-                        }
-                        this.setState({ tableData, isRedirect: false });
-                    }
-                } else {
-                    this.setState({ isRedirect: true });
-                    Toast.error("Error occured!");
-                }
-            } else {
-                this.setState({ isRedirect: true });
-                Toast.error("Error occured!");
-            }
-        } catch (error) {
-            this.setState({ isRedirect: true });
-            Toast.error("Error occured!");
+  const deleteData =async (deliveryRoute)=>{
+    const endPoint = api.apiUrl + '/storekeeper/deleteRoute'
+    console.log(deliveryRoute['Route_ID'])
+    const token = localStorage.getItem('token')
+    const deleteForm =  {routeId:deliveryRoute['Route_ID']}
+    console.log(deleteForm)
+    try{
+      // const response =await axios.delete(,{headers:{Authorization: `Bearer ${token}`,}}, data:deleteForm,)
+      
+      const response =await  axios.delete(endPoint, {headers: {Authorization: `Bearer ${token}`,},data: deleteForm,})
+      console.log(response)
+    }catch(ex){
+      if (ex.response) {
+        console.log(ex.response);
+        switch (ex.response.status) {
+          case 400:
+            setAlertMessage(ex.response.data.message);
+            setShow(true)
+            break;
+          case 401:
+            setAlertMessage(ex.response.data.message);
+            setShow(true)
+
+            history.push({
+              pathname:"/logout"
+            })
+            break;
+          case 404:
+            setAlertMessage(ex.response.data.message);
+            setShow(true)
+            break;
+          default:
+            break;
         }
-    };
-
-    // handleDelete = async (id) => {
-    //     const result = await confirm("Are you sure ?");
-    //     if (result) {
-    //         try {
-    //             const response = await RouteService.deleteRoute(id);
-    //             Toast.success(response.data.message);
-    //             if (response.status === 200) {
-    //                 if (response.data.code === 200) {
-    //                     const data = [...this.state.tableData];
-    //                     const deleted = [];
-
-    //                     for (let i = 0; i < data.length; i++) {
-    //                         if (data[i].id !== id) {
-    //                             deleted.push(data[i]);
-    //                         }
-    //                     }
-    //                     this.setState({ tableData: deleted });
-    //                 } else {
-    //                     Toast.error("Error occured!");
-    //                 }
-    //             } else {
-    //                 Toast.error("Error occured!");
-    //             }
-    //         } catch (error) {
-    //             Toast.error("Error occured!");
-    //         }
-    //     }
-    // };
-
-    render() {
-        if (this.state.isRedirect)
-            return <Redirect to="/delivery-routes/all-routes" />;
-        return (
-            <div>
-                <div className="card">
-                    <div className="card-body">
-                        <h4 className="card-title">Delivery Routes</h4>
-                        <div className="table-responsive">
-                            <ViewAllTable
-                                columnNames={this.state.columnNames}
-                                tableData={this.state.tableData}
-                                editURL="edit-route/"
-                                onDelete={this.handleDelete}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
+      }
     }
-}
+  }
+
+  useEffect(() => {
+    console.log("Useeffect"+localStorage.getItem("token")) 
+    const token = localStorage.getItem("token")     
+    axios.get(apiEndpoint,{headers:{Authorization: `Bearer ${token}`}})
+    .then(response =>{
+        let delivery_routes_data = response.data.result
+        console.log(delivery_routes_data)
+        setDeliveryRoutes(delivery_routes_data);
+        deliveryRoutes.map((deliveryRoute,index)=>{
+            console.log(deliveryRoute)
+        })
+    }).catch(ex=>{
+      if (ex.response) {
+        console.log(ex.response);
+        switch (ex.response.status) {
+          case 400:
+            setAlertMessage(ex.response.data.message);
+            break;
+          case 401:
+            setAlertMessage(ex.response.data.message);
+            console.log(ex.response.data.message)
+            history.push({
+              pathname:"/logout"
+            })
+
+            break;
+          case 404:
+            console.log(ex.response.data)
+            setAlertMessage(ex.response.data.message);
+            break;
+          default:
+            break;
+        }
+      }})
+  }, []);
+
+  const user = Auth.getCurrentUser()
+  
+  if(user == null){
+    return <Redirect to={'/login'} />
+  }
+
+  if(user.role !== 'STOREKEEPER'){
+    return <Redirect to={'/dashboard'} />
+  }
+  return (
+    <div className="card">
+      <div className="card-body">
+        <h4 className="card-title"> Store Keepers </h4>
+        <Alert isOpen={show} color='danger'>
+                  <p>{alertMessage}</p>
+        </Alert>
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Route Id</th> 
+                <th>End city</th>
+                <th>End city </th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              {deliveryRoutes.map((route,index) => 
+                (<tr key={route['Route_ID']}>
+                  <td>{route['Route_ID']}</td> 
+                  <td>{route['Start_City']}</td>
+                  <td>{route['End_City']}</td> 
+                  
+                  <th><button type="button" className="btn btn-warning btn-rounded" onClick={()=>updateData(route)}>Update</button></th>
+                  <th><button type="button" className="btn btn-danger btn-rounded" onClick={()=>deleteData(route)}>Delete</button></th>
+                </tr>)
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <ul></ul>
+    </div>
+  );
+    }
+
 export default AllRoutes;

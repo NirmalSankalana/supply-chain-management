@@ -7,11 +7,11 @@ import http from "../../services/httpService";
 import Auth from "../../services/user/authService";
 import { Button,FormGroup, Label, Input, Alert, Card, CardBody } from "reactstrap";
 
-function UpdateManager(props) {
-    const oldManager = props.history.location.state.manager;
+function UpdateAssistant(props) {
+    const oldAssistant = props.history.location.state.assistant;
     const apiEndpoint = api.apiUrl + "/admin/register";
-    console.log(oldManager)
-    const initialValues = { username:oldManager['User_ID'] , fName: oldManager['First_Name'], lName: oldManager['Last_Name'], managerRole: oldManager['Role'] };
+    console.log(oldAssistant)
+    const initialValues = { username:oldAssistant['ID'] , fName: oldAssistant['First_Name'], lName: oldAssistant['Last_Name'] };
     const [formValues, setformValues] = useState(initialValues);
     const [show, setShow] = useState(false);
     const [alertMessage, setAlertMessage] = useState('')
@@ -28,7 +28,7 @@ function UpdateManager(props) {
       console.log(formValues);
       console.log(apiEndpoint)
       try{
-        const response = await http.post(apiEndpoint, formValues);
+        const response = await axios.post(apiEndpoint, formValues);
         console.log(response);
       }catch(ex){
         if (ex.response) {
@@ -55,10 +55,8 @@ function UpdateManager(props) {
               default:
                 break;
             }
-          }
-         
+          }  
       }
-      
     };
     const user = Auth.getCurrentUser()
   
@@ -70,7 +68,7 @@ function UpdateManager(props) {
       return <Redirect to={'/dashboard'} />
     }
     return (
-      <div className="col-12 grid-margin">
+        <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
           <Alert isOpen={show} color='danger'>
@@ -85,8 +83,8 @@ function UpdateManager(props) {
                     <div className="col-sm-9">
                       <Form.Control
                         type="text"
-                        name="username"
-                        value={formValues.username}
+                        name="id"
+                        value={formValues.id}
                         onChange={handleChange}
                         readOnly={true}
                       />
@@ -123,22 +121,7 @@ function UpdateManager(props) {
                     </div>
                   </Form.Group>
                 </div>
-                <div className="col-md-6">
-                  <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
-                      Manager Role
-                    </label>
-                    <div className="col-sm-9">
-                      <Form.Control
-                        type="text"
-                        name="managerRole"
-                        value={formValues.managerRole}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </Form.Group>
-                </div>
+            
               </div>
   
               <button type="submit" className="btn btn-primary mr-2">
@@ -151,4 +134,4 @@ function UpdateManager(props) {
       </div>
     );
   }
-  export default UpdateManager;
+  export default UpdateAssistant;

@@ -1,71 +1,121 @@
-import React, { Component,Suspense, lazy } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React, { Component, Suspense, lazy } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 
-import Spinner from '../app/shared/Spinner';
+import Spinner from "../app/shared/Spinner";
+// import UpdateRoute from "./components/UpdateRoute";
 
-const Dashboard = lazy(() => import('./dashboard/Dashboard'));
+const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
-const Buttons = lazy(() => import('./basic-ui/Buttons'));
-const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
+const Buttons = lazy(() => import("./basic-ui/Buttons"));
+const Dropdowns = lazy(() => import("./basic-ui/Dropdowns"));
 
-const BasicElements = lazy(() => import('./form-elements/BasicElements'));
+const BasicElements = lazy(() => import("./form-elements/BasicElements"));
 
-const BasicTable = lazy(() => import('./tables/BasicTable'));
+const BasicTable = lazy(() => import("./tables/BasicTable"));
 
-const Mdi = lazy(() => import('./icons/Mdi'));
+const Mdi = lazy(() => import("./icons/Mdi"));
 
-const ChartJs = lazy(() => import('./charts/ChartJs'));
+const ChartJs = lazy(() => import("./charts/ChartJs"));
 
-const Error404 = lazy(() => import('./error-pages/Error404'));
-const Error500 = lazy(() => import('./error-pages/Error500'));
+const Error404 = lazy(() => import("./error-pages/Error404"));
+const Error500 = lazy(() => import("./error-pages/Error500"));
 
-const Login = lazy(() => import('./user-pages/Login'));
-const Register1 = lazy(() => import('./user-pages/Register'));
+const Login = lazy(() => import("./user-pages/Login"));
+const Logout = lazy(() => import("./user-pages/Logout"));
 
-const DeliveryRoutes = lazy(() => import('./pages/DeliveryRoutes'));
+const Register1 = lazy(() => import("./user-pages/Register"));
 
-const Trucks = lazy(() => import('./pages/Truck'));
-const Driver = lazy(() => import('./pages/Driver'));
-const Delivery = lazy(() => import('./pages/Delivery'));
-const Assistant = lazy(() => import('./pages/Assistant'));
+const DeliveryRoutes = lazy(() => import("./pages/DeliveryRoutes"));
+
+const Trucks = lazy(() => import("./pages/Truck"));
+const Driver = lazy(() => import("./pages/Driver"));
+const Delivery = lazy(() => import("./pages/Delivery"));
+const Assistant = lazy(() => import("./pages/Assistant"));
 
 // admin route
-const Manager = lazy(() => import('./pages/Manager'));
+const Manager = lazy(() => import("./pages/Manager"));
+const UpdateManager = lazy(() => import("../app/components/UpdateManager"));
+const AddManager = lazy(() => import("../app/components/AddManager"));
+const AllManagers = lazy(() => import("../app/components/AllManagers"));
+
+const UpdateRoute = lazy(() => import("./components/UpdateRoute"));
+const AddRoute = lazy(() => import("../app/components/AddRoute"));
+const AllRoutes = lazy(() => import("../app/components/AllRoutes"));
+
+const DashboardAdmin = lazy(() => import("./dashboard/DashboardAdmin"));
+const DashboardManager = lazy(() => import("./dashboard/DashboardManager"))
+const DashboardStoreKeeper = lazy(() => import("./dashboard/DashboardStoreKeeper"))
+const DashboardAssistant = lazy(() => import("./dashboard/DashboardAssistant"))
+
+const StoreKeeper = lazy(() => import("./pages/StoreKeeper"));
+
+const Train = lazy(() => import("./pages/Train"));
+
+// manager routes
+const UpdateStorekeeper = lazy(() => import("../app/components/UpdateStorekeeper"));
+const AddStorekeeper = lazy(() => import("../app/components/AddStoreKeeper"));
+const AllStorekeepers = lazy(() => import("../app/components/AllStoreKeepers"));
+
+const UpdateTrain = lazy(() => import("../app/components/UpdateTrain"));
+const AddTrain = lazy(() => import("../app/components/AddTrain"));
+const AllTrains = lazy(() => import("../app/components/AllTrains"));
 
 
 class AppRoutes extends Component {
-  render () {
+  render() {
     return (
-      <Suspense fallback={<Spinner/>}>
+      <Suspense fallback={<Spinner />}>
         <Switch>
-          <Route exact path="/dashboard" component={ Dashboard } />
+          <Route path="/login" component={Login} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route path="/logout" component={Logout} />
+         
+          <Route path="/admin/register" component={AddManager} />
+          <Route path="/admin/update" component={UpdateManager} />
+          <Route path="/admin/getManagers" component={AllManagers} />
 
-          <Route path="/basic-ui/buttons" component={ Buttons } />
-          <Route path="/basic-ui/dropdowns" component={ Dropdowns } />
+          <Route path="/storekeeper/update-route" component={UpdateRoute} />
+          <Route path="/storekeeper/routes" component={AllRoutes} />
+          <Route path="/storekeeper/registerRoute" component={AddRoute} />
 
-          <Route path="/form-Elements/basic-elements" component={ BasicElements } />
+          <Route path="/manager/register" component={AddStorekeeper} />
+          <Route path="/manager/update" component={UpdateStorekeeper} />
+          <Route path="/manager/getStorekeepers" component={AllStorekeepers} />
 
-          <Route path="/tables/basic-table" component={ BasicTable } />
+          <Route path="/manager/registerTrain" component={AddTrain} />
+          <Route path="/manager/updateTrain" component={UpdateTrain} />
+          <Route path="/manager/getTrains" component={AllTrains} />
+          {/* <Route path="/basic-ui/buttons" component={Buttons} />
+          <Route path="/basic-ui/dropdowns" component={Dropdowns} /> */}
 
-          <Route path="/icons/mdi" component={ Mdi } />
+          {/* <Route
+            path="/form-Elements/basic-elements"
+            component={BasicElements}
+          /> */}
 
-          <Route path="/charts/chart-js" component={ ChartJs } />
+          {/* <Route path="/tables/basic-table" component={BasicTable} />
 
+          <Route path="/icons/mdi" component={Mdi} />
 
-          <Route path="/login" component={ Login } />
-          <Route path="/user-pages/register-1" component={ Register1 } />
+          <Route path="/charts/chart-js" component={ChartJs} /> */}
 
-          <Route path="/error-pages/error-404" component={ Error404 } />
-          <Route path="/error-pages/error-500" component={ Error500 } />
-          <Route path="/delivery-routes" component={ DeliveryRoutes } />
-          <Route path="/truck" component={ Trucks } />
-          <Route path="/driver" component={ Driver } />
-          <Route path="/delivery" component={ Delivery } />
-          <Route path="/assistants" component={ Assistant } />
+          {/* <Route path="/user-pages/register-1" component={Register1} /> */}
 
+          <Route path="/error-pages/error-404" component={Error404} />
+          <Route path="/error-pages/error-500" component={Error500} />
+          <Route path="/delivery-routes" component={DeliveryRoutes} />
+          <Route path="/truck" component={Trucks} />
+          <Route path="/driver" component={Driver} />
+          <Route path="/delivery" component={Delivery} />
+          <Route path="/assistant" component={Assistant} />
 
-          <Route path="/manager" component={ Manager } />
-
+          <Route path="/manager" component={Manager} />
+          {/* <Route path="/store-keeper" component={StoreKeeper} /> */}
+          <Route path="/train" component={Train} />
+          <Route path="/dashboard-admin" component={DashboardAdmin} />
+          <Route path="/dashboard-manager" component={DashboardManager} />
+          <Route path="/dashboard-storekeeper" component={DashboardStoreKeeper} />
+          <Route path="/dashboard-assistant" component={DashboardAssistant} />
           <Redirect to="/login" />
         </Switch>
       </Suspense>

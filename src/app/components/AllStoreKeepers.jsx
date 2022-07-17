@@ -4,31 +4,34 @@ import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody } from "re
 
 import { api } from "../../config";
 import http from "../../services/httpService";
+import axios from "axios";
 import UpdateManager from "./UpdateManager";
 import Auth from '../../services/user/authService';
 
 function AllManagers() {
-  const apiEndpoint = api.apiUrl + "/admin/getManagers";
+  const apiEndpoint = api.apiUrl + "/manager/storekeepers";
   
-  const [managers, setManagers] = useState([]);
+  const [storeKeepers, setStoreKeeper] = useState([]);
   const [show, setShow] = useState(false);
   const [alertMessage, setAlertMessage] = useState('')
 
   const history = useHistory()
 
-  const updateData = (manager)=>{  
-    console.log(manager)
+  let token = localStorage.getItem("token");
+
+  const updateData = (storeKeeper)=>{  
+    console.log(storeKeeper)
     history.push({
-      pathname:"/admin/update",
-      state: {manager:manager}
+      pathname:"manager/update",
+      state: {storeKeeper:storeKeeper}
     })
   }
 
-  const deleteData = (manager)=>{
-    const endPoint = api.apiUrl + '/delete'
-    console.log(manager)
+  const deleteData =async (storeKeeper)=>{
+    const endPoint = api.apiUrl + '/manager/delete'
+    console.log(storeKeeper)
     try{
-      const response = http.delete(endPoint,manager)
+      const response = await axios.delete(endPoint,storeKeeper , {headers: { Authorization: `Bearer ${token}` }})
       console.log(response)
     }catch(ex){
       if (ex.response) {
@@ -49,7 +52,6 @@ function AllManagers() {
           case 404:
             setAlertMessage(ex.response.data.message);
             setShow(true)
-
             break;
           default:
             break;
@@ -59,12 +61,12 @@ function AllManagers() {
   }
 
   useEffect(() => {
-      http.get(apiEndpoint).then(response =>{
-        let manager_data = response.data.result.result
+      axios.get(apiEndpoint , {headers: { Authorization: `Bearer ${token}` }}).then(response =>{
+        let storekeeper_data = response.data.result.result
         // console.log(response.data.result.result)
-        setManagers(manager_data);
-        managers.map((manager,index)=>{
-            console.log(manager)
+        setStoreKeeper(storekeeper_data);
+        storeKeepers.map((storeKeeper,index)=>{
+            console.log(storeKeeper)
         })
     }).catch(ex=>{
       if (ex.response) {
@@ -96,37 +98,36 @@ function AllManagers() {
     return <Redirect to={'/login'} />
   }
 
-  if(user.role !== 'ADMIN'){
+  if(user.role !== 'MANAGER'){
     return <Redirect to={'/dashboard'} />
   }
   return (
     <div className="card">
       <div className="card-body">
-        <h4 className="card-title"> Managers </h4>
-        <Alert isOpen={show} color='danger'>
+        <h4 className="card-title"> Shop Keepers </h4>
+        {/* <Alert isOpen={show} color='danger'>
                   <p>{alertMessage}</p>
-        </Alert>
+        </Alert> */}
         <div className="table-responsive">
           <table className="table">
             <thead>
               <tr>
-                <th>Staff ID</th> 
+                <th>User ID</th> 
+                <th>Store keeper ID</th>
                 <th>First Name </th>
                 <th>Last Name </th>
-                <th>Role</th>
                 <th>Update</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {managers.map((manager,index) => 
-                (<tr key={manager['User_ID']}>
-                  <td>{manager['Staff_ID']}</td> 
-                  <td>{manager['First_Name']}</td>
-                  <td>{manager['Last_Name']}</td> 
-                  <td>{manager['Role']}</td>
-                  <th><button type="button" className="btn btn-warning btn-rounded" onClick={()=>updateData(manager)}>Update</button></th>
-                  <th><button type="button" className="btn btn-danger btn-rounded" onClick={()=>deleteData(manager)}>Delete</button></th>
+              {storeKeepers.map((storeKeeper,index) => 
+                (<tr key={storeKeeper['User_ID']}>
+                  <td>{storeKeeper['Storekeeper_ID']}</td> 
+                  <td>{storeKeeper['First_Name']}</td>
+                  <td>{storeKeeper['Last_Name']}</td> 
+                  <th><button type="button" className="btn btn-warning btn-rounded" onClick={()=>updateData(storeKeeper)}>Update</button></th>
+                  <th><button type="button" className="btn btn-danger btn-rounded" onClick={()=>deleteData(storeKeeper)}>Delete</button></th>
                 </tr>)
               )}
             </tbody>

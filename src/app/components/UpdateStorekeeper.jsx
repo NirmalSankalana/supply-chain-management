@@ -3,17 +3,19 @@ import { Form } from "react-bootstrap";
 import { useHistory,Redirect } from "react-router-dom";
 import { api } from "../../config.js";
 import http from "../../services/httpService";
+import axios from "axios";
 import Auth from "../../services/user/authService";
 import {Alert} from "reactstrap";
 
-
-function AddManager() {
-  const apiEndpoint = api.apiUrl + "/admin/register";
+function UpdateStoreKeeper(props) {
+  const apiEndpoint = api.apiUrl + "/manager/update";
+  const oldStoreKeeper = props.history.location.state.storekeeper;
   const history = useHistory()
-  const initialValues = { username: "", password: "", fName: "", lName: "", managerRole: "" };
+  const initialValues = { username: oldStoreKeeper['Username'], fName: oldStoreKeeper['First_Name'], lName: oldStoreKeeper['Last_Name']};
   
   const [formValues, setformValues] = useState(initialValues);
-  const [show, setShow] = useState(false);
+  const [showErr, setShowErr] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [alertMessage, setAlertMessage] = useState('')
 
   const handleChange = (e) => {
@@ -28,20 +30,28 @@ function AddManager() {
 
     console.log(apiEndpoint)
     try{
-      const response = await http.post(apiEndpoint, formValues);
-      setShow(true)
-      setAlertMessage("New user added");
+      // const response = await http.post(apiEndpoint, formValues);
+      let token = localStorage.getItem("token");
+      const response = await axios.post(apiEndpoint, {headers: { Authorization: `Bearer ${token}` }})
       console.log(response);
+      if(response.statusCode === 200){
+        setformValues(initialValues)
+        setShowErr(false);
+        setShowPass(true)
+        setAlertMessage("Successfully Updated!");
+      }
     }catch(ex){
       if (ex.response) {
         console.log(ex.response);
         switch (ex.response.status) {
           case 400:
-            setShow(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             break;
           case 401:
-            setShow(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             history.push({
               pathname:"/logout"
@@ -49,7 +59,8 @@ function AddManager() {
 
             break;
           case 404:
-            setShow(true)
+            setShowPass(false)
+            setShowErr(true);
             setAlertMessage(ex.response.data.message);
             break;
           default:
@@ -66,7 +77,7 @@ function AddManager() {
     return <Redirect to={'/login'} />
   }
 
-  if(user.role !== 'ADMIN'){
+  if(user.role !== 'MANAGER'){
     return <Redirect to={'/logout'} />
   }
 
@@ -77,15 +88,18 @@ function AddManager() {
     <div className="col-12 grid-margin">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">Register New Manager</h4>
-          <Alert isOpen={show} color='danger'>
+          <h4 className="card-title">Update Storekeeper</h4>
+          <Alert isOpen={showErr} color='danger'>
+                  <p>{alertMessage}</p>
+        </Alert>
+        <Alert isOpen={showPass} color='success'>
                   <p>{alertMessage}</p>
         </Alert>
           <form className="" onSubmit={submitHandler}>
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">Email</label>
+                  <label className="col-sm-3 col-form-label">User Name</label>
                   <div className="col-sm-9">
                     <Form.Control
                       type="text"
@@ -97,7 +111,7 @@ function AddManager() {
                   </div>
                 </Form.Group>
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <Form.Group className="row">
                   <label className="col-sm-3 col-form-label">Password</label>
                   <div className="col-sm-9">
@@ -110,7 +124,7 @@ function AddManager() {
                     />
                   </div>
                 </Form.Group>
-              </div>
+              </div> */}
             </div>
             <div className="row">
               <div className="col-md-6">
@@ -120,7 +134,7 @@ function AddManager() {
                     <Form.Control
                       type="text"
                       name="fName"
-                      value={formValues.firstName}
+                      value={formValues.fName}
                       onChange={handleChange}
                       required
                     />
@@ -134,23 +148,7 @@ function AddManager() {
                     <Form.Control
                       type="text"
                       name="lName"
-                      value={formValues.lastName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">
-                    Manager Role
-                  </label>
-                  <div className="col-sm-9">
-                    <Form.Control
-                      type="text"
-                      name="managerRole"
-                      value={formValues.managerRole}
+                      value={formValues.lName}
                       onChange={handleChange}
                       required
                     />
@@ -160,7 +158,7 @@ function AddManager() {
             </div>
 
             <button type="submit" className="btn btn-primary mr-2">
-              Add Manager
+              Update Shop Keeper
             </button>
             {/* <button className="btn btn-light">Cancel</button> */}
           </form>
@@ -169,4 +167,4 @@ function AddManager() {
     </div>
   );
 }
-export default AddManager;
+export default UpdateStoreKeeper;
